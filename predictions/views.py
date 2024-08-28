@@ -15,62 +15,69 @@ model = joblib.load(model_path)
 
 
 def predict_stock(request):
+    try:
+        # KOSPI 종목 리스트 가져오기
+        kospi_list = fdr.StockListing('Kospi')
+
+        # 'Name' 컬럼을 리스트로 변환
+        stock_name_list = kospi_list['Name'].tolist()
+    except Exception as e:
+        return HttpResponseBadRequest(f"Error retrieving KOSPI stock names: {str(e)}")
+
     if request.method == 'POST':
+        stock_name = request.POST.get('stock_name', '').strip()
+
+        # Kospi 종목 리스트에서 해당 주식명의 코드를 찾기
+        stock_info = kospi_list[kospi_list['Name'] == stock_name]
+
+        if stock_info.empty:
+            return HttpResponseBadRequest(f"주식명 '{stock_name}'을(를) 찾을 수 없습니다.")
+
+        stock_code = stock_info['Code'].values[0]
+
+        # 해당 주식의 데이터를 가져옴
+        stock_data = fdr.DataReader(stock_code)
+
+        if stock_data.empty:
+            return HttpResponseBadRequest(f"해당 주식 '{stock_name}'의 데이터를 불러올 수 없습니다.")
+
+        # 데이터프레임의 마지막 행(가장 최근 데이터)에서 필요한 열 추출
+        last_row = stock_data.iloc[-1]
+        open_price = last_row['Open']
+        high = last_row['High']
+        low = last_row['Low']
+        close = last_row['Close']
+        volume = last_row['Volume']
+
+        # Scaler 파일 경로 설정 및 로드
+        scaler_path = os.path.join(BASE_DIR, 'scaler', f'{stock_name}_scaler.pkl')
+
+        if not os.path.exists(scaler_path):
+            return HttpResponseBadRequest(f"해당 주식 '{stock_name}'에 대한 스케일러를 찾을 수 없습니다.")
+
+        scaler = joblib.load(scaler_path)
+
+        # 입력 데이터를 스케일링
+        input_data = [[close, volume, open_price, high, low]]
+        scaled_data = scaler.transform(input_data)
+
+        # 예측 수행
         try:
-            # 사용자가 입력한 주식명 가져오기
-            stock_name = request.POST.get('stock_name').strip()
-
-            # Kospi 종목 리스트에서 해당 주식명의 코드를 찾기
-            kospi_list = fdr.StockListing('Kospi')
-            stock_info = kospi_list[kospi_list['Name'] == stock_name]
-
-            if stock_info.empty:
-                return HttpResponseBadRequest(f"Stock name '{stock_name}' not found in KOSPI listings.")
-
-            stock_code = stock_info['Code'].values[0]
-
-            # 해당 주식의 데이터를 가져옴
-            stock_data = fdr.DataReader(stock_code)
-
-            if stock_data.empty:
-                return HttpResponseBadRequest(f"해당 주식 {'{stock_name}'}은 지원하지 않습니다.")
-
-            # 데이터프레임의 마지막 행(가장 최근 데이터)에서 필요한 열 추출
-            last_row = stock_data.iloc[-1]
-            open_price = last_row['Open']
-            high = last_row['High']
-            low = last_row['Low']
-            close = last_row['Close']
-            volume = last_row['Volume']
-
-            # Scaler 파일 경로 설정
-            scaler_path = os.path.join(BASE_DIR, 'scaler', f'{stock_name}_scaler.pkl')
-
-            # Scaler 로드
-            if not os.path.exists(scaler_path):
-                return HttpResponseBadRequest(f"해당 주식 {'{stock_name}'}은 지원하지 않습니다.")
-
-            scaler = joblib.load(scaler_path)
-
-            # 입력 데이터를 스케일링
-            input_data = [[close, volume, open_price, high, low]]
-            scaled_data = scaler.transform(input_data)
-
-            # 예측 수행
             prediction = model.predict(scaled_data)[0]
+        except Exception as e:
+            return HttpResponseBadRequest(f"예측 중 오류가 발생했습니다: {str(e)}")
 
-            # 예측 결과와 추가 정보를 새로운 템플릿에 전달하여 렌더링
-            context = {
-                'stock_name': stock_name,
-                'open_price': open_price,
-                'high': high,
-                'low': low,
-                'close': close,
-                'volume': volume,
-                'prediction': prediction,
-            }
-            return render(request, 'predictions/prediction_result.html', context)
-        except (KeyError, ValueError, IndexError) as e:
-            return HttpResponseBadRequest(f"Error during prediction: {str(e)}")
+        # 예측 결과와 추가 정보를 템플릿에 전달하여 렌더링
+        context = {
+            'stock_name': stock_name,
+            'open_price': open_price,
+            'high': high,
+            'low': low,
+            'close': close,
+            'volume': volume,
+            'prediction': prediction,
+            'stock_name_list': stock_name_list,  # 주식명 리스트를 템플릿에 전달
+        }
+        return render(request, 'predictions/prediction_result.html', context)
 
-    return render(request, 'predictions/predict.html')
+    return render(request, 'predictions/predict.html', {'stock_name_list': stock_name_list})

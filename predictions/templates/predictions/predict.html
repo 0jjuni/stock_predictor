@@ -11,10 +11,20 @@
             margin: 0;
             padding: 20px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             min-height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+        }
+
+        .form-container {
+            flex: 1;
+            margin-right: 20px;
         }
 
         h1 {
@@ -73,24 +83,74 @@
             background-color: #d32f2f;
         }
 
+        .stock-list-container {
+            flex: 1;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .stock-list-container h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        ul.stock-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul.stock-list li {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #ddd;
+        }
+
+        ul.stock-list li:hover {
+            background-color: #f1f1f1;
+        }
+
     </style>
+    <script>
+        function fillStockName(stockName) {
+            document.getElementById('stock_name').value = stockName;
+        }
+    </script>
 </head>
 <body>
-    <h1>Enter Stock Data for Prediction</h1>
-    <form method="POST" action="{% url 'predict_stock' %}">
-        {% csrf_token %}
-        <label for="stock_name">Stock Name:</label>
-        <input type="text" name="stock_name" required><br>
-        <button type="submit">Predict</button>
-    </form>
+    <div class="container">
+        <div class="form-container">
+            <h1>Enter Stock Data for Prediction</h1>
+            <form method="POST" action="{% url 'predict_stock' %}">
+                {% csrf_token %}
+                <label for="stock_name">Stock Name:</label>
+                <input type="text" id="stock_name" name="stock_name" required><br>
+                <button type="submit">Predict</button>
+            </form>
 
-    {% if prediction is not None %}
-        <h2>Prediction Result: {{ prediction }}</h2>
-    {% endif %}
+            {% if prediction is not None %}
+                <h2>Prediction Result: {{ prediction }}</h2>
+            {% endif %}
 
-    <!-- 홈 화면으로 돌아가는 버튼 추가 -->
-    <a href="{% url 'home' %}">
-        <button type="button" class="back-button">Back to Home</button>
-    </a>
+            <!-- 홈 화면으로 돌아가는 버튼 추가 -->
+            <a href="{% url 'home' %}">
+                <button type="button" class="back-button">Back to Home</button>
+            </a>
+        </div>
+
+        <div class="stock-list-container">
+            <h2>KOSPI Stock List</h2>
+            <ul class="stock-list">
+                {% for name in stock_name_list %}
+                    <li onclick="fillStockName('{{ name }}')">{{ name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </body>
 </html>
