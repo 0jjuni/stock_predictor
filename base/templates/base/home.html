@@ -1,4 +1,3 @@
-<!-- stock_predictor/templates/home.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +28,12 @@
             text-align: center;
         }
 
-        .predict-button {
+        .button-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .predict-button, .recommend-button {
             background-color: #4CAF50;
             color: white;
             padding: 15px 30px;
@@ -41,7 +45,7 @@
             display: inline-block;
         }
 
-        .predict-button:hover {
+        .predict-button:hover, .recommend-button:hover {
             background-color: #45a049;
         }
 
@@ -49,9 +53,14 @@
 </head>
 <body>
     <h1>Welcome to the Stock Predictor</h1>
-    <p>Click the button below to predict stock prices.</p>
+    <p>Click the button below to predict stock prices or get stock recommendations.</p>
 
-    <!-- 종목 예측 버튼 -->
-    <a href="{% url 'predict_stock' %}" class="predict-button">종목 예측</a>
+    <!-- 버튼 컨테이너 -->
+    <div class="button-container">
+        <!-- 종목 예측 버튼 -->
+        <a href="{% url 'predict_stock' %}" class="predict-button">종목 예측</a>
+        <!-- 종목 추천 버튼 -->
+        <a href="{% url 'recommend_stocks' %}" class="recommend-button">종목 추천</a>
+    </div>
 </body>
 </html>
