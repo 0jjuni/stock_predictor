@@ -1,0 +1,17 @@
+<!-- stock_predictor/templates/home.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Welcome to the Stock Predictor</h1>
+    <p>Click the button below to predict stock prices.</p>
+
+    <!-- 종목 예측 버튼 -->
+    <a href="{% url 'predict_stock' %}">
+        <button>종목 예측</button>
+    </a>
+</body>
+</html>

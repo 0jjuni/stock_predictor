@@ -17,5 +17,11 @@
     {% if prediction is not None %}
         <h2>Prediction Result: {{ prediction }}</h2>
     {% endif %}
+
+    <!-- 홈 화면으로 돌아가는 버튼 추가 -->
+    <br>
+    <a href="{% url 'home' %}">
+        <button type="button">Back to Home</button>
+    </a>
 </body>
 </html>
