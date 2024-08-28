@@ -21,5 +21,6 @@ from django.urls import include
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('predictions/', include('predictions.urls')),
-    path('', include('base.urls')),  # base 앱의 URL을 포함
+    path('', include('base.urls')),  # base 앱
+    path('recommendation/', include('recommendation.urls')),
 ]
