@@ -1,8 +1,9 @@
-import os
-import joblib
 from django.shortcuts import render
 from django.http import HttpResponseBadRequest
+from base.models import Stock  # 'base'는 앱 이름입니다. 실제 사용 중인 앱 이름으로 변경하세요.
 import FinanceDataReader as fdr
+import os
+import joblib
 
 # 프로젝트의 루트 디렉토리 경로를 가져옵니다.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -13,27 +14,20 @@ model_path = os.path.join(BASE_DIR, 'models', '1day5per.pkl')
 # 모델 로드 (첫 요청 시 한 번만 로드)
 model = joblib.load(model_path)
 
-
 def predict_stock(request):
-    try:
-        # KOSPI 종목 리스트 가져오기
-        kospi_list = fdr.StockListing('Kospi')
-
-        # 'Name' 컬럼을 리스트로 변환
-        stock_name_list = kospi_list['Name'].tolist()
-    except Exception as e:
-        return HttpResponseBadRequest(f"Error retrieving KOSPI stock names: {str(e)}")
+    # 데이터베이스에서 주식 리스트를 가져옴
+    stock_name_list = Stock.objects.values_list('name', flat=True)
 
     if request.method == 'POST':
         stock_name = request.POST.get('stock_name', '').strip()
 
-        # Kospi 종목 리스트에서 해당 주식명의 코드를 찾기
-        stock_info = kospi_list[kospi_list['Name'] == stock_name]
-
-        if stock_info.empty:
+        # 데이터베이스에서 주식명에 해당하는 코드를 조회
+        try:
+            stock_info = Stock.objects.get(name=stock_name)
+        except Stock.DoesNotExist:
             return HttpResponseBadRequest(f"주식명 '{stock_name}'을(를) 찾을 수 없습니다.")
 
-        stock_code = stock_info['Code'].values[0]
+        stock_code = stock_info.code
 
         # 해당 주식의 데이터를 가져옴
         stock_data = fdr.DataReader(stock_code)
