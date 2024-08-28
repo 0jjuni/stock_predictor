@@ -1,0 +1,33 @@
+<!-- stock_predictor/predictions/templates/predictions/prediction_result.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prediction Result</title>
+</head>
+<body>
+    <h1>Prediction Result for {{ stock_name }}</h1>
+
+    <!-- 현재 날짜 표시 -->
+    <p><strong>Date:</strong> {% now "Y-m-d" %}</p>
+
+    <p><strong>Open:</strong> {{ open_price }}</p>
+    <p><strong>High:</strong> {{ high }}</p>
+    <p><strong>Low:</strong> {{ low }}</p>
+    <p><strong>Close:</strong> {{ close }}</p>
+    <p><strong>Volume:</strong> {{ volume }}</p>
+
+    <!-- prediction 값에 따른 메시지 표시 -->
+    <h2>Predicted Value:
+        {% if prediction == 0 %}
+            5% 이상 증가하지 않음
+        {% elif prediction == 1 %}
+            5% 이상 증가 예상
+        {% else %}
+            알 수 없는 예측 값
+        {% endif %}
+    </h2>
+
+    <a href="{% url 'predict_stock' %}">Back to Prediction Form</a>
+</body>
+</html>

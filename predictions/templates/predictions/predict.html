@@ -1,0 +1,21 @@
+<!-- stock_predictor/predictions/templates/predictions/predict.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stock Prediction</title>
+</head>
+<body>
+    <h1>Enter Stock Data for Prediction</h1>
+    <form method="POST" action="{% url 'predict_stock' %}">
+        {% csrf_token %}
+        <label for="stock_name">Stock Name:</label>
+        <input type="text" name="stock_name" required><br>
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if prediction is not None %}
+        <h2>Prediction Result: {{ prediction }}</h2>
+    {% endif %}
+</body>
+</html>
