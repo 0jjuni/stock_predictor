@@ -4,6 +4,7 @@ from base.models import Stock  # 'base'는 앱 이름입니다. 실제 사용 �
 import FinanceDataReader as fdr
 import os
 import joblib
+import pandas as pd
 
 # 프로젝트의 루트 디렉토리 경로를 가져옵니다.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -51,15 +52,21 @@ def predict_stock(request):
 
         scaler = joblib.load(scaler_path)
 
-        # 입력 데이터를 스케일링
-        input_data = [[close, volume, open_price, high, low]]
+        # 입력 데이터를 DataFrame으로 변환하여 피처 이름을 제공
+        input_data = pd.DataFrame([[close, volume, open_price, high, low]],
+                                  columns=['Close', 'Volume', 'Open', 'High', 'Low'])
+
+        # 스케일링
         scaled_data = scaler.transform(input_data)
 
-        # 예측 수행
+        # 예측 확률 수행
         try:
-            prediction = model.predict(scaled_data)[0]
+            proba = model.predict_proba(scaled_data)[0][1]  # 클래스 1의 확률
         except Exception as e:
             return HttpResponseBadRequest(f"예측 중 오류가 발생했습니다: {str(e)}")
+
+        # 확률이 0.93 이상인 경우에만 1로 설정
+        prediction = 1 if proba >= 0.93 else 0
 
         # 예측 결과와 추가 정보를 템플릿에 전달하여 렌더링
         context = {

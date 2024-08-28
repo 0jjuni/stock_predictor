@@ -54,14 +54,14 @@ def recommend_stocks(request):
         # 스케일링
         scaled_data = scaler.transform(input_data)
 
-        # 예측 수행
+        # 예측 확률 수행
         try:
-            prediction = model.predict(scaled_data)[0]
+            proba = model.predict_proba(scaled_data)[0][1]  # 클래스 1의 확률
         except Exception as e:
             continue  # 예측 중 오류가 발생하면 다음 주식으로 넘어감
 
-        # 예측 결과가 1인 경우 추천 리스트에 추가
-        if prediction == 1:
+        # 확률이 0.93 이상인 경우만 추천 리스트에 추가
+        if proba >= 0.93:
             recommended_stocks.append(stock_name)
 
     # 추천 주식 리스트를 템플릿에 전달하여 렌더링
