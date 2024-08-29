@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -28,8 +28,20 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = '/'  # 로그인 후 리디렉션할 URL
+LOGOUT_REDIRECT_URL = '/'  # 로그아웃 후 리디렉션할 URL
 
+
+
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+
+# Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -40,6 +52,7 @@ INSTALLED_APPS = [
     "predictions",
     "base",
     "recommendation",
+    'accounts',
 ]
 
 MIDDLEWARE = [

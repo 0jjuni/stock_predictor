@@ -23,4 +23,5 @@ urlpatterns = [
     path('predictions/', include('predictions.urls')),
     path('', include('base.urls')),  # base 앱
     path('recommendation/', include('recommendation.urls')),
+    path('accounts/', include('accounts.urls')),
 ]
