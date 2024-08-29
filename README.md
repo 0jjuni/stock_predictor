@@ -12,7 +12,7 @@ load_kospi_stocks()
 ## 추천 작업 실행
 - shell에 접속하여 아래의 코드를 실행하면 해당 날짜의 추천 작업을 진행한다.
 - `python manage.py shell`
-
+- 해당작업은 하루에 1번만 실행하면 user가 사용하는데 문제가 발생하지 않으나 작업을 실행하지 않을 경우 첫 이용자가 약 6분정도의 대기시간을 가져야 접속이 가능하다.
 ```commandline
 from recommendation.views import recommend_stocks
 

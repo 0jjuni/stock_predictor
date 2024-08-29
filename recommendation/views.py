@@ -6,6 +6,7 @@ from django.utils import timezone
 from .models import Recommendation
 from base.models import Stock
 import FinanceDataReader as fdr
+from django.utils.timezone import localdate
 
 # 프로젝트의 루트 디렉토리 경로를 가져옵니다.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -18,14 +19,19 @@ model = joblib.load(model_path)
 
 
 def recommend_stocks(request=None):
-    today = timezone.now().date()
+    today = localdate()  # 현재 로컬 날짜를 가져옴
+
+    # 디버깅용 출력
+    print(f"Today's date: {today}")
 
     # 오늘 날짜에 저장된 추천 데이터가 있는지 확인
-    if Recommendation.objects.filter(created_at__date=today).exists():
+    recommendations = Recommendation.objects.filter(created_at__date=today)
+    if recommendations.exists():
+        print("Existing recommendations found for today.")
         # 오늘의 추천 데이터를 불러옴
-        recommended_stocks = Recommendation.objects.filter(created_at__date=today)
-        recommended_stocks_list = [{'name': rec.stock_name, 'code': rec.stock_code} for rec in recommended_stocks]
+        recommended_stocks_list = [{'name': rec.stock_name, 'code': rec.stock_code} for rec in recommendations]
     else:
+        print("No recommendations found for today, generating new recommendations.")
         recommended_stocks_list = []
 
         # 데이터베이스에서 모든 주식 리스트를 가져옴
