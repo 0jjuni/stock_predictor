@@ -12,6 +12,12 @@
                     </li>
                     {% if user.is_authenticated %}
                         <li class="nav-item">
+                            <a class="btn btn-outline-primary me-2" href="{% url 'add_interest_stock' %}">Add Stock</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-primary me-2" href="{% url 'view_interest_stocks' %}">View Stocks</a>
+                        </li>
+                        <li class="nav-item">
                             <form id="logout-form" method="post" action="{% url 'logout' %}" style="display: inline;">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-outline-danger me-2">Logout</button>

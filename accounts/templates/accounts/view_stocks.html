@@ -1,0 +1,16 @@
+{% extends "base/base.html" %}
+
+{% block title %}Your Interest Stocks{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Your Interest Stocks</h2>
+    <ul class="list-group">
+        {% for stock in stocks %}
+            <li class="list-group-item">
+                {{ stock.stock_name }} ({{ stock.stock_code }})
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

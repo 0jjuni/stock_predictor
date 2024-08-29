@@ -19,3 +19,51 @@ class CustomLogoutView(LogoutView):
     def get(self, request, *args, **kwargs):
         # GET 요청을 POST 요청처럼 처리하여 로그아웃을 실행합니다.
         return self.post(request, *args, **kwargs)
+
+
+
+
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages  # 메시지 프레임워크를 사용하여 사용자에게 알림
+from .forms import InterestStockForm
+from base.models import Stock
+from .models import InterestStock
+
+@login_required
+def add_interest_stock(request):
+    if request.method == 'POST':
+        form = InterestStockForm(request.POST)
+        if form.is_valid():
+            stock_name = form.cleaned_data['stock_name']
+
+            # 주식 이름이 데이터베이스에 있는지 확인
+            try:
+                stock = Stock.objects.get(name=stock_name)
+            except Stock.DoesNotExist:
+                messages.error(request, f"{stock_name} is not a valid stock name.")
+                return render(request, 'accounts/add_stock.html', {'form': form})
+
+            # 동일한 주식이 이미 관심 목록에 있는지 확인
+            if InterestStock.objects.filter(user=request.user, stock_code=stock.code).exists():
+                messages.error(request, f"{stock_name} is already in your interest list.")
+            else:
+                interest_stock = InterestStock(
+                    user=request.user,
+                    stock_name=stock.name,
+                    stock_code=stock.code
+                )
+                interest_stock.save()
+                messages.success(request, f"{stock_name} has been added to your interest list.")
+                return redirect('view_interest_stocks')
+    else:
+        form = InterestStockForm()
+
+    return render(request, 'accounts/add_stock.html', {'form': form})
+
+
+@login_required
+def view_interest_stocks(request):
+    stocks = InterestStock.objects.filter(user=request.user)
+    return render(request, 'accounts/view_stocks.html', {'stocks': stocks})

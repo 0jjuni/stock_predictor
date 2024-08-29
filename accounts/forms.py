@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
+from .models import InterestStock
 
 class CustomUserCreationForm(UserCreationForm):
     username = forms.CharField(
@@ -23,3 +24,10 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ("username", "password1", "password2")
+
+
+class InterestStockForm(forms.ModelForm):
+    class Meta:
+        model = InterestStock
+        fields = ['stock_name']  # 주식명만 입력받도록 설정
+
