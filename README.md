@@ -18,3 +18,12 @@ from recommendation.views import recommend_stocks
 
 recommend_stocks()
 ```
+
+
+## -5%에 대한 예측
+```commandline
+
+from base.utils import predict_and_save_stocks  # 실제 앱 이름으로 변경
+
+predict_and_save_stocks()
+```

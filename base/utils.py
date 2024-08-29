@@ -22,7 +22,7 @@ import pandas as pd
 import FinanceDataReader as fdr
 from django.utils.timezone import localdate
 from base.models import Stock  # 실제 앱 이름으로 변경하세요.
-from predictions.models import Predict_5  # Predict_5 모델 임포트
+from predictions.models import minusPredict  # Predict_5 모델 임포트
 
 # 프로젝트의 루트 디렉토리 경로를 가져옵니다.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -40,7 +40,7 @@ def predict_and_save_stocks():
     stocks = Stock.objects.all()
 
     # 기존에 저장된 오늘 날짜의 예측 결과 삭제 (재실행 방지)
-    Predict_5.objects.filter(created_at=today).delete()
+    minusPredict.objects.filter(created_at=today).delete()
 
     # 각 주식에 대해 예측을 수행하고 결과를 저장
     for stock in stocks:
@@ -70,7 +70,7 @@ def predict_and_save_stocks():
 
         # 필요한 열 선택
         input_data = pd.DataFrame([[
-            last_row['Close'], last_row['Volume'], last_row['Open'], last_row['High'], last_row['Low'],
+            last_row['Volume'], last_row['Open'], last_row['Low'],
             last_row['MA_5'], last_row['Volume_MA_10'], last_row['Volatility'],
             last_row['EMA_12'], last_row['MACD']
         ]], columns=[
@@ -100,7 +100,7 @@ def predict_and_save_stocks():
         prediction = 1 if proba >= 0.87 else 0
 
         # 예측 결과를 Predict_5 모델에 저장
-        Predict_5.objects.create(
+        minusPredict.objects.create(
             stock_name=stock_name,
             stock_code=stock_code,
             prediction=prediction,
