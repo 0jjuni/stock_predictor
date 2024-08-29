@@ -1,8 +1,11 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Stock Prediction</title>
+    <!-- 기존 페이지 스타일 -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,34 +22,31 @@
             display: flex;
             justify-content: space-between;
             width: 80%;
+            margin-top: 50px; /* 상단 여백 */
         }
 
         .form-container {
             flex: 1;
             margin-right: 20px;
-        }
-
-        h1 {
-            color: #333;
-        }
-
-        form {
             background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             text-align: center;
-            margin-bottom: 20px;
         }
 
-        label {
+        .form-container h1 {
+            color: #333;
+        }
+
+        .form-container label {
             display: block;
             margin-bottom: 10px;
             color: #555;
             font-weight: bold;
         }
 
-        input[type="text"] {
+        .form-container input[type="text"] {
             width: 100%;
             padding: 8px;
             margin-bottom: 20px;
@@ -55,8 +55,8 @@
             box-sizing: border-box;
         }
 
-        button {
-            background-color: #4CAF50;
+        .form-container button {
+            background-color: #007bff; /* 파란색 계열 */
             color: white;
             padding: 10px 20px;
             border: none;
@@ -65,21 +65,12 @@
             font-size: 16px;
         }
 
-        button:hover {
-            background-color: #45a049;
+        .form-container button:hover {
+            background-color: #0056b3; /* 조금 더 진한 파란색 */
         }
 
-        h2 {
-            color: #4CAF50;
-        }
-
-        .back-button {
-            background-color: #f44336;
-            margin-top: 10px;
-        }
-
-        .back-button:hover {
-            background-color: #d32f2f;
+        .form-container h2 {
+            color: #007bff; /* 파란색 계열 */
         }
 
         .stock-list-container {
@@ -123,14 +114,64 @@
             background-color: #f1f1f1;
         }
 
+        /* 오른쪽 위에 Home 버튼 */
+        .home-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .home-button:hover {
+            background-color: #0056b3;
+        }
     </style>
+</head>
+<body>
+
+    <!-- Home 버튼 삽입 -->
+    <a href="{% url 'home' %}" class="home-button">Home</a>
+
+    <div class="container">
+        <div class="form-container">
+            <h1>Enter Stock Data for Prediction</h1>
+            <form method="POST" action="{% url 'predict_stock' %}">
+                {% csrf_token %}
+                <label for="stock_name">Stock Name:</label>
+                <input type="text" id="stock_name" name="stock_name" required><br>
+                <button type="submit" class="btn btn-primary">Predict</button>
+            </form>
+
+            {% if prediction is not None %}
+                <h2>Prediction Result: {{ prediction }}</h2>
+            {% endif %}
+        </div>
+
+        <div class="stock-list-container">
+            <h2>KOSPI Stock List</h2>
+            <input type="text" id="stock-search" onkeyup="filterStocks()" placeholder="Search for stocks..">
+            <ul class="stock-list" id="stock-list">
+                {% for name in stock_name_list %}
+                    <li onclick="fillStockName('{{ name }}')">{{ name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- 자바스크립트 코드 -->
     <script>
         function fillStockName(stockName) {
             document.getElementById('stock_name').value = stockName;
         }
 
         function filterStocks() {
-            var input, filter, ul, li, a, i, txtValue;
+            var input, filter, ul, li, i, txtValue;
             input = document.getElementById('stock-search');
             filter = input.value.toUpperCase();
             ul = document.getElementById("stock-list");
@@ -146,37 +187,5 @@
             }
         }
     </script>
-</head>
-<body>
-    <div class="container">
-        <div class="form-container">
-            <h1>Enter Stock Data for Prediction</h1>
-            <form method="POST" action="{% url 'predict_stock' %}">
-                {% csrf_token %}
-                <label for="stock_name">Stock Name:</label>
-                <input type="text" id="stock_name" name="stock_name" required><br>
-                <button type="submit">Predict</button>
-            </form>
-
-            {% if prediction is not None %}
-                <h2>Prediction Result: {{ prediction }}</h2>
-            {% endif %}
-
-            <!-- 홈 화면으로 돌아가는 버튼 추가 -->
-            <a href="{% url 'home' %}">
-                <button type="button" class="back-button">Back to Home</button>
-            </a>
-        </div>
-
-        <div class="stock-list-container">
-            <h2>KOSPI Stock List</h2>
-            <input type="text" id="stock-search" onkeyup="filterStocks()" placeholder="Search for stocks..">
-            <ul class="stock-list" id="stock-list">
-                {% for name in stock_name_list %}
-                    <li onclick="fillStockName('{{ name }}')">{{ name }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
 </body>
 </html>
