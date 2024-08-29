@@ -4,9 +4,8 @@
 - `python manage.py shell`
 - DB를 구축하고 1번만 실행하면 종목 예측 탭을 편하게 사용 가능합니다.
 ```commandline
-from base.utils import load_kospi_stocks  # utils.py 파일에서 함수 불러오기
+from base.utils import load_kospi_stocks  
 
-# 함수 실행
 load_kospi_stocks()
 ```
 
@@ -16,5 +15,6 @@ load_kospi_stocks()
 
 ```commandline
 from recommendation.views import recommend_stocks
+
 recommend_stocks()
 ```
