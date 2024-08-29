@@ -11,17 +11,17 @@
         <table class="table table-bordered table-hover">
             <thead style="background-color: #007bff; color: white; text-align: center;">
                 <tr>
-                    <th>Date</th>
-                    <th>Open</th>
-                    <th>High</th>
-                    <th>Low</th>
-                    <th>Close</th>
-                    <th>Volume</th>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Open</th>
+                    <th class="text-center">High</th>
+                    <th class="text-center">Low</th>
+                    <th class="text-center">Close</th>
+                    <th class="text-center">Volume</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>{% now "Y-m-d" %}</td>
+                <tr class="text-center">
+                    <td>{{ date }}</td>
                     <td>{{ open_price }}</td>
                     <td>{{ high }}</td>
                     <td>{{ low }}</td>
@@ -32,16 +32,37 @@
         </table>
     </div>
 
-    <!-- prediction 값에 따른 메시지 표시 -->
-    <h2 class="text-center mt-4">
-        {% if prediction == 0 %}
-            5% 이상 증가 하지 않음
-        {% elif prediction == 1 %}
-            5% 이상 증가 예상
+    <!-- Predict_5 모델에서 가져온 예측값 표시 -->
+    <div class="mt-5">
+        <h4>Predict_5 Model Prediction:</h4>
+        {% if predict_5_data %}
+            {% if predict_5_data.prediction == 1 %}
+                <p style="color: red;">5% 이상 상승할 수 있음.</p>
+            {% elif predict_5_data.prediction == 0 %}
+                <p style="color: red;">5% 이상 상승하지 않음.</p>
+            {% else %}
+                <p>No data available for Predict_5 model.</p>
+            {% endif %}
         {% else %}
-            알 수 없는 예측 값
+            <p>No data available for Predict_5 model.</p>
         {% endif %}
-    </h2>
+    </div>
+
+    <!-- minusPredict 모델에서 가져온 예측값 표시 -->
+    <div class="mt-3">
+        <h4>minusPredict Model Prediction:</h4>
+        {% if minus_predict_data %}
+            {% if minus_predict_data.prediction == 1 %}
+                <p style="color: blue;">5% 이상 하락할 수 있음.</p>
+            {% elif minus_predict_data.prediction == 0 %}
+                <p style="color: blue;">5% 이상 하락하지 않음.</p>
+            {% else %}
+                <p>No data available for minusPredict model.</p>
+            {% endif %}
+        {% else %}
+            <p>No data available for minusPredict model.</p>
+        {% endif %}
+    </div>
 
     <div class="text-center mt-4">
         <a href="{% url 'predict_stock' %}" class="btn btn-primary">Back to Prediction Form</a>

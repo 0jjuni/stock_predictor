@@ -1,10 +1,17 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import login
-from .forms import CustomUserCreationForm  # 새로운 폼 임포트
+from .forms import CustomUserCreationForm
 from django.contrib.auth.views import LogoutView
 from django.views import generic
-from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
+from predictions.models import Predict_5, minusPredict
+from django.utils import timezone
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages  # 메시지 프레임워크를 사용하여 사용자에게 알림
+from .forms import InterestStockForm
+from .models import InterestStock
+from base.models import Stock
+
+
 class RegisterView(generic.CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy('login')  # 회원가입 후 로그인 페이지로 이동
@@ -24,12 +31,7 @@ class CustomLogoutView(LogoutView):
 
 
 
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages  # 메시지 프레임워크를 사용하여 사용자에게 알림
-from .forms import InterestStockForm
-from .models import InterestStock
-from base.models import Stock
+
 
 @login_required
 def add_interest_stock(request):
@@ -57,14 +59,33 @@ def add_interest_stock(request):
                 )
                 interest_stock.save()
                 messages.success(request, f"{stock_name} has been added to your interest list.")
-                return redirect('view_interest_stocks')
+                return redirect('add_interest_stock')
     else:
         form = InterestStockForm()
 
     return render(request, 'accounts/add_stock.html', {'form': form, 'all_stocks': all_stocks})
 
 
+
+
+
 @login_required
 def view_interest_stocks(request):
+    # 사용자의 관심 주식 목록을 가져옴
     stocks = InterestStock.objects.filter(user=request.user)
-    return render(request, 'accounts/view_stocks.html', {'stocks': stocks})
+
+    # 각 주식에 대해 예측 정보 추가
+    stock_data = []
+    today = timezone.now().date()
+
+    for stock in stocks:
+        predict_5_data = Predict_5.objects.filter(stock_name=stock.stock_name, created_at=today).first()
+        minus_predict_data = minusPredict.objects.filter(stock_name=stock.stock_name, created_at=today).first()
+
+        stock_data.append({
+            'stock': stock,
+            'predict_5_data': predict_5_data,
+            'minus_predict_data': minus_predict_data
+        })
+
+    return render(request, 'accounts/view_stocks.html', {'stock_data': stock_data})

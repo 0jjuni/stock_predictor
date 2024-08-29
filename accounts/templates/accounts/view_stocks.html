@@ -1,16 +1,55 @@
 {% extends "base/base.html" %}
 
-{% block title %}Your Interest Stocks{% endblock %}
+{% block title %}My Interest Stocks{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
-    <h2>Your Interest Stocks</h2>
-    <ul class="list-group">
-        {% for stock in stocks %}
-            <li class="list-group-item">
-                {{ stock.stock_name }} ({{ stock.stock_code }})
-            </li>
-        {% endfor %}
-    </ul>
+    <h1 class="text-center mb-4">My Interest Stocks</h1>
+    <p class="text-center">사놓은 종목이 있거나 관심있는 종목이 있는 경우 추가해서 해당 종목을 관리하세요!</p> <!-- 설명 추가 -->
+
+    {% if stock_data %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead style="background-color: #007bff; color: white;">
+                    <tr>
+                        <th class="text-center">Stock Name</th>
+                        <th class="text-center">5% 상승 예측</th>
+                        <th class="text-center">5% 하락 예측</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in stock_data %}
+                        <tr class="text-center">
+                            <td>{{ item.stock.stock_name }}</td>
+                            <td>
+                                {% if item.predict_5_data %}
+                                    {% if item.predict_5_data.prediction == 1 %}
+                                        <span style="color: red;">5% 이상 상승 예상</span>
+                                    {% else %}
+                                        <span>5% 이상 상승하지 않음</span>
+                                    {% endif %}
+                                {% else %}
+                                    <span>No data</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if item.minus_predict_data %}
+                                    {% if item.minus_predict_data.prediction == 1 %}
+                                        <span style="color: blue;">5% 이상 하락 예상</span>
+                                    {% else %}
+                                        <span>5% 이상 하락하지 않음</span>
+                                    {% endif %}
+                                {% else %}
+                                    <span>No data</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="text-center">No stocks in your interest list.</p>
+    {% endif %}
 </div>
 {% endblock %}
