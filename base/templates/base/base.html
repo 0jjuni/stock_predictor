@@ -8,19 +8,20 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     {% include 'base/header.html' %}
 
-    <div class="content" style="padding-top: 60px;">
+    <div class="content" style="flex: 1; padding-top: 60px; max-width: 1200px; margin: 0 auto;">
         {% block content %}
         {% endblock %}
     </div>
+    {% include 'base/footer.html' %}
 
-    <footer>
-        <p>&copy; 2024 iM Digital banker academy. All rights reserved.</p>
-    </footer>
+    <!-- Optional JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
