@@ -65,8 +65,8 @@ def predict_stock(request):
         except Exception as e:
             return HttpResponseBadRequest(f"예측 중 오류가 발생했습니다: {str(e)}")
 
-        # 확률이 0.93 이상인 경우에만 1로 설정
-        prediction = 1 if proba >= 0.93 else 0
+        # 확률이 0.96 이상인 경우에만 1로 설정
+        prediction = 1 if proba >= 0.96 else 0
 
         # 예측 결과와 추가 정보를 템플릿에 전달하여 렌더링
         context = {

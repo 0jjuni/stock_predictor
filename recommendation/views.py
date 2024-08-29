@@ -70,8 +70,8 @@ def recommend_stocks(request=None):
             except Exception as e:
                 continue  # 예측 중 오류가 발생하면 다음 주식으로 넘어감
 
-            # 확률이 0.93 이상인 경우만 추천 리스트에 추가
-            if proba >= 0.93:
+            # 확률이 0.96 이상인 경우만 추천 리스트에 추가
+            if proba >= 0.96:
                 recommended_stocks_list.append(stock_name)
 
         # 기존의 오늘 추천 데이터를 삭제하고 새로 추가

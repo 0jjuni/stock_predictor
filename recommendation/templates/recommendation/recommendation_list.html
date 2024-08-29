@@ -20,6 +20,14 @@
             color: #333;
         }
 
+        p.description {
+            color: #555;
+            margin-top: 10px;
+            font-size: 16px;
+            text-align: center;
+            width: 80%;
+        }
+
         ul {
             list-style-type: none;
             padding: 0;
@@ -35,10 +43,31 @@
             text-align: center;
             width: 300px;
         }
+
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-button:hover {
+            background-color: #45a049;
+        }
+
     </style>
 </head>
 <body>
     <h1>Recommended Stocks</h1>
+
+    <!-- 설명 추가 -->
+    <p class="description">
+        해당 추천 종목은 모델이 코스피 종목들에 대해 하루 뒤 5%이상 오를 것이라고 예측한 종목입니다.
+    </p>
+
     <ul>
         {% if recommended_stocks %}
             {% for stock in recommended_stocks %}
@@ -48,5 +77,8 @@
             <li>No recommendations at this time.</li>
         {% endif %}
     </ul>
+
+    <!-- 홈 화면으로 돌아가는 버튼 -->
+    <a href="{% url 'home' %}" class="back-button">Back to Home</a>
 </body>
 </html>
