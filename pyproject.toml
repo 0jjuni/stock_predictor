@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "stock-predictor"
+version = "0.1.0"
+description = "stock predict program"
+authors = ["0jjuni"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+xgboost = "2.1.1"
+scikit-learn = "1.5.1"
+finance-datareader = "^0.9.93"
+pymysql = "^1.1.1"
+django = "5.0.3"
+mysqlclient = "^2.2.4"
+bs4 = "^0.0.2"
+plotly = "^5.23.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
