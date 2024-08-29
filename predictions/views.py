@@ -24,7 +24,7 @@ def predict_stock(request):
 
         # 데이터프레임의 마지막 행(가장 최근 데이터)에서 필요한 열 추출 및 날짜 추출
         last_row = stock_data.iloc[-1]
-        date = last_row.name  # 인덱스에서 날짜를 추출
+        date = last_row.name.strftime('%Y-%m-%d')  # 인덱스에서 날짜를 yyyy-mm-dd 형식으로 추출
         open_price = last_row['Open']
         high = last_row['High']
         low = last_row['Low']
