@@ -82,3 +82,6 @@ def predict_stock(request):
         return render(request, 'predictions/prediction_result.html', context)
 
     return render(request, 'predictions/predict.html', {'stock_name_list': stock_name_list})
+
+
+

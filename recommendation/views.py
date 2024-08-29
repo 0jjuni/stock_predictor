@@ -4,7 +4,7 @@ import pandas as pd
 from django.shortcuts import render
 from django.utils import timezone
 from .models import Recommendation
-from predictions.models import minusPredict
+from predictions.models import Predict_5
 from base.models import Stock
 import FinanceDataReader as fdr
 from django.utils.timezone import localdate, now
@@ -40,7 +40,7 @@ def recommend_stocks(request=None):
 
         # 오늘 이전의 추천 데이터 및 관련 minusPredict 데이터를 삭제
         Recommendation.objects.filter(created_at__lt=today).delete()
-        minusPredict.objects.filter(created_at__lt=today).delete()
+        Predict_5.objects.filter(created_at__lt=today).delete()
 
         # 모든 주식 리스트 가져옴
         stocks = Stock.objects.all()
@@ -88,7 +88,7 @@ def recommend_stocks(request=None):
                     recommended_stocks_list.append({'name': stock_name, 'code': stock_code})
 
             # 예측 결과를 minusPredict 모델에 저장 (1 또는 0)
-            minusPredict.objects.create(stock_name=stock_name, stock_code=stock_code, prediction=prediction, created_at=today)
+            Predict_5.objects.create(stock_name=stock_name, stock_code=stock_code, prediction=prediction, created_at=today)
 
     if request:
         context = {
