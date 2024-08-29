@@ -3,9 +3,9 @@
 {% block title %}Add Interest Stock{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
+<div class="container mt-3">
     <div class="row justify-content-center">
-        <div class="col-md-20">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header text-center">
                     <h3>Add Interest Stock</h3>
@@ -28,6 +28,49 @@
                 </div>
             </div>
         </div>
+
+        <!-- 전체 주식 리스트를 오른쪽에 표시 -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>KOSPI Stock List</h3>
+                </div>
+                <div class="card-body">
+                    <input type="text" id="stock-search" class="form-control mb-3" onkeyup="filterStocks()" placeholder="Search for stocks..">
+                    <ul class="list-group" id="stock-list">
+                        {% for stock in all_stocks %}
+                            <li class="list-group-item" onclick="fillStockName('{{ stock.name }}')">
+                                {{ stock.name }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<!-- 자바스크립트 코드 추가 -->
+<script>
+    function fillStockName(stockName) {
+        document.getElementById('id_stock_name').value = stockName;
+    }
+
+    function filterStocks() {
+        var input, filter, ul, li, i, txtValue;
+        input = document.getElementById('stock-search');
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("stock-list");
+        li = ul.getElementsByTagName('li');
+
+        for (i = 0; i < li.length; i++) {
+            txtValue = li[i].textContent || li[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+    }
+</script>
 {% endblock %}

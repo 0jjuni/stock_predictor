@@ -28,11 +28,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages  # 메시지 프레임워크를 사용하여 사용자에게 알림
 from .forms import InterestStockForm
-from base.models import Stock
 from .models import InterestStock
+from base.models import Stock
 
 @login_required
 def add_interest_stock(request):
+    all_stocks = Stock.objects.all()  # 전체 주식 리스트를 가져옴
     if request.method == 'POST':
         form = InterestStockForm(request.POST)
         if form.is_valid():
@@ -43,7 +44,7 @@ def add_interest_stock(request):
                 stock = Stock.objects.get(name=stock_name)
             except Stock.DoesNotExist:
                 messages.error(request, f"{stock_name} is not a valid stock name.")
-                return render(request, 'accounts/add_stock.html', {'form': form})
+                return render(request, 'accounts/add_stock.html', {'form': form, 'all_stocks': all_stocks})
 
             # 동일한 주식이 이미 관심 목록에 있는지 확인
             if InterestStock.objects.filter(user=request.user, stock_code=stock.code).exists():
@@ -60,7 +61,7 @@ def add_interest_stock(request):
     else:
         form = InterestStockForm()
 
-    return render(request, 'accounts/add_stock.html', {'form': form})
+    return render(request, 'accounts/add_stock.html', {'form': form, 'all_stocks': all_stocks})
 
 
 @login_required
