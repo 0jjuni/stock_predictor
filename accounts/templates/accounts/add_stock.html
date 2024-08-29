@@ -37,7 +37,7 @@
                 </div>
                 <div class="card-body">
                     <input type="text" id="stock-search" class="form-control mb-3" onkeyup="filterStocks()" placeholder="Search for stocks..">
-                    <ul class="list-group" id="stock-list">
+                    <ul class="list-group" id="stock-list" style="max-height: 400px; overflow-y: auto; width: 100%;">
                         {% for stock in all_stocks %}
                             <li class="list-group-item" onclick="fillStockName('{{ stock.name }}')">
                                 {{ stock.name }}
