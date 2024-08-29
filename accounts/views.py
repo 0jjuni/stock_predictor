@@ -2,17 +2,17 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from .forms import CustomUserCreationForm  # 새로운 폼 임포트
 from django.contrib.auth.views import LogoutView
+from django.views import generic
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
+class RegisterView(generic.CreateView):
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy('login')  # 회원가입 후 로그인 페이지로 이동
+    template_name = 'accounts/register.html'
 
-def register(request):
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('home')
-    else:
-        form = CustomUserCreationForm()
-    return render(request, 'accounts/register.html', {'form': form})
+    def form_valid(self, form):
+        form.save()  # 사용자 저장
+        return super().form_valid(form)
 
 
 class CustomLogoutView(LogoutView):
