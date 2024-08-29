@@ -3,16 +3,24 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<h1>Welcome to the Stock Predictor</h1>
-<p>Click the button below to predict stock prices, get stock recommendations, or view model performance.</p>
+<div class="container text-center my-5">
+    <h1 class="mb-4">Welcome to the Stock Predictor</h1>
+    <p class="lead mb-5">Click the button below to predict stock prices, get stock recommendations, or view model performance.</p>
 
-<!-- 버튼 컨테이너 -->
-<div class="button-container">
-    <!-- 종목 예측 버튼 -->
-    <a href="{% url 'predict_stock' %}" class="predict-button">종목 예측</a>
-    <!-- 종목 추천 버튼 -->
-    <a href="{% url 'recommend_stocks' %}" class="recommend-button">종목 추천</a>
-    <!-- 모델 정보 버튼 -->
-    <a href="{% url 'model_performance' %}" class="model-info-button">모델 정보</a>
+    <!-- 버튼 컨테이너 -->
+    <div class="row justify-content-center">
+        <div class="col-md-4 mb-3">
+            <!-- 종목 예측 버튼 -->
+            <a href="{% url 'predict_stock' %}" class="btn btn-primary btn-lg btn-block">종목 예측</a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <!-- 종목 추천 버튼 -->
+            <a href="{% url 'recommend_stocks' %}" class="btn btn-primary btn-lg btn-block">종목 추천</a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <!-- 모델 정보 버튼 -->
+            <a href="{% url 'model_performance' %}" class="btn btn-primary btn-lg btn-block">모델 정보</a>
+        </div>
+    </div>
 </div>
 {% endblock %}

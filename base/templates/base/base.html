@@ -5,15 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}My Django Project{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">  <!-- 메인 스타일 -->
-    <link rel="stylesheet" href="{% static 'css/header.css' %}"> <!-- 헤더 스타일 -->
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     {% include 'base/header.html' %}
 
-    <div class="content" style="padding-top: 60px;"> <!-- 헤더 높이만큼 패딩 추가 -->
+    <div class="content" style="padding-top: 60px;">
         {% block content %}
-        <!-- 페이지별 콘텐츠가 여기 들어갑니다. -->
         {% endblock %}
     </div>
 
