@@ -4,6 +4,7 @@ import pandas as pd
 from django.shortcuts import render
 from django.utils import timezone
 from .models import Recommendation
+from predictions.models import minusPredict
 from base.models import Stock
 import FinanceDataReader as fdr
 from django.utils.timezone import localdate, now
@@ -36,6 +37,10 @@ def recommend_stocks(request=None):
     else:
         print("No recommendations found for today, generating new recommendations.")
         recommended_stocks_list = []
+
+        # 오늘 이전의 추천 데이터 및 관련 minusPredict 데이터를 삭제
+        Recommendation.objects.filter(created_at__lt=today).delete()
+        minusPredict.objects.filter(created_at__lt=today).delete()
 
         # 모든 주식 리스트 가져옴
         stocks = Stock.objects.all()
@@ -74,11 +79,16 @@ def recommend_stocks(request=None):
             except Exception as e:
                 continue
 
-            if proba >= 0.96:
+            prediction = 1 if proba >= 0.96 else 0
+
+            if prediction == 1:
                 # 중복 확인 후 추가
                 if not Recommendation.objects.filter(stock_name=stock_name, created_at=today).exists():
                     Recommendation.objects.create(stock_name=stock_name, stock_code=stock_code, created_at=today)
                     recommended_stocks_list.append({'name': stock_name, 'code': stock_code})
+
+            # 예측 결과를 minusPredict 모델에 저장 (1 또는 0)
+            minusPredict.objects.create(stock_name=stock_name, stock_code=stock_code, prediction=prediction, created_at=today)
 
     if request:
         context = {
