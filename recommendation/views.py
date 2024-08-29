@@ -24,7 +24,7 @@ def recommend_stocks(request=None):
     if Recommendation.objects.filter(created_at__date=today).exists():
         # 오늘의 추천 데이터를 불러옴
         recommended_stocks = Recommendation.objects.filter(created_at__date=today)
-        recommended_stocks_list = [rec.stock_name for rec in recommended_stocks]
+        recommended_stocks_list = [{'name': rec.stock_name, 'code': rec.stock_code} for rec in recommended_stocks]
     else:
         recommended_stocks_list = []
 
@@ -72,12 +72,12 @@ def recommend_stocks(request=None):
 
             # 확률이 0.96 이상인 경우만 추천 리스트에 추가
             if proba >= 0.96:
-                recommended_stocks_list.append(stock_name)
+                recommended_stocks_list.append({'name': stock_name, 'code': stock_code})
 
         # 기존의 오늘 추천 데이터를 삭제하고 새로 추가
         Recommendation.objects.filter(created_at__date=today).delete()
-        for stock_name in recommended_stocks_list:
-            Recommendation.objects.create(stock_name=stock_name)
+        for stock in recommended_stocks_list:
+            Recommendation.objects.create(stock_name=stock['name'], stock_code=stock['code'])
 
     if request:
         # 추천 주식 리스트를 템플릿에 전달하여 렌더링 (웹 요청 시)

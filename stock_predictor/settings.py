@@ -78,11 +78,14 @@ WSGI_APPLICATION = "stock_predictor.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "stock_predictor",  # 사용할 데이터베이스 이름을 입력하세요
+        "USER": "root",
+        "PASSWORD": "0000",
+        "HOST": "127.0.0.1",
+        "PORT": "3219",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -108,11 +111,14 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+# 시간대를 설정합니다.
+TIME_ZONE = 'Asia/Seoul'
+
+# 타임존 사용 여부를 설정합니다.
+USE_TZ = True
 
 USE_I18N = True
 
-USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)

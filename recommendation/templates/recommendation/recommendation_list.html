@@ -71,7 +71,11 @@
     <ul>
         {% if recommended_stocks %}
             {% for stock in recommended_stocks %}
-                <li>{{ stock }}</li>
+                <li>
+                    <a href="https://finance.naver.com/item/news.naver?code={{ stock.code }}" target="_blank">
+                        {{ stock.name }}
+                    </a>
+                </li>
             {% endfor %}
         {% else %}
             <li>No recommendations at this time.</li>
