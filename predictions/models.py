@@ -5,7 +5,7 @@ class minusPredict(models.Model):
     stock_code = models.CharField(max_length=255)
     prediction = models.FloatField()
     created_at = models.DateField()
-
+    is_after_market_close = models.BooleanField(default=False)  # 15:30 이후 예측 여부 추가
     def __str__(self):
         return f"{self.stock_name} - {self.created_at}"
 
