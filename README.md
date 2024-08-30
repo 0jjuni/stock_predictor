@@ -27,9 +27,9 @@ python manage.py migrate
 ```
 
 ## 코스피 종목 리스트 DB에 불러오기
-- shell에 접속하여 아래의 코드를 실행하면 코스피 종목의 리스트를 불러옵니다.
+- shell에 접속하여 아래의 코드를 실행하면 코스피 종목의 리스트를 불러온다.
 - `python manage.py shell`
-- DB를 구축하고 1번만 실행하면 종목 예측 탭을 편하게 사용 가능합니다.
+- DB를 구축하고 1번만 실행하면 종목 예측 탭을 편하게 사용 가능하다.
 ```commandline
 from base.utils import load_kospi_stocks  
 
@@ -55,4 +55,11 @@ recommend_stocks()
 from base.utils import predict_and_save_stocks  # 실제 앱 이름으로 변경
 
 predict_and_save_stocks()
+```
+
+## Django 실행
+- 모든 설정이 끝나면 아래의 코드를 통해 서버를 실행하고 아래의 주소로 접속하면 이용가능하다. 
+- http://127.0.0.1:8000/
+```commandline
+python manage.py runserver
 ```
