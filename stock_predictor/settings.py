@@ -37,6 +37,10 @@ LOGOUT_REDIRECT_URL = '/'  # 로그아웃 후 리디렉션할 URL
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
