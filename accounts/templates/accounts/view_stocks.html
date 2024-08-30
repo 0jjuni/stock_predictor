@@ -12,16 +12,17 @@
             <table class="table table-bordered table-hover">
                 <thead style="background-color: #007bff; color: white;">
                     <tr>
-                        <th class="text-center">Stock Name</th>
-                        <th class="text-center">5% 상승 예측</th>
-                        <th class="text-center">5% 하락 예측</th>
+                        <th class="text-center" style="vertical-align: middle;">Stock Name</th>
+                        <th class="text-center" style="vertical-align: middle;">5% 상승 예측</th>
+                        <th class="text-center" style="vertical-align: middle;">5% 하락 예측</th>
+                        <th class="text-center" style="vertical-align: middle;">뉴스·공시</th> <!-- 뉴스 열 추가 -->
                     </tr>
                 </thead>
                 <tbody>
                     {% for item in stock_data %}
                         <tr class="text-center">
-                            <td>{{ item.stock.stock_name }}</td>
-                            <td>
+                            <td style="vertical-align: middle;">{{ item.stock.stock_name }}</td>
+                            <td style="vertical-align: middle;">
                                 {% if item.predict_5_data %}
                                     {% if item.predict_5_data.prediction == 1 %}
                                         <span style="color: red;">5% 이상 상승 예상</span>
@@ -32,7 +33,7 @@
                                     <span>No data</span>
                                 {% endif %}
                             </td>
-                            <td>
+                            <td style="vertical-align: middle;">
                                 {% if item.minus_predict_data %}
                                     {% if item.minus_predict_data.prediction == 1 %}
                                         <span style="color: blue;">5% 이상 하락 예상</span>
@@ -43,6 +44,11 @@
                                     <span>No data</span>
                                 {% endif %}
                             </td>
+                            <td style="vertical-align: middle;">
+                                <a href="https://finance.naver.com/item/news.naver?code={{ item.stock.stock_code }}" target="_blank" class="btn btn-primary">
+                                    바로가기
+                                </a>
+                            </td> <!-- 뉴스 열에 버튼 추가 -->
                         </tr>
                     {% endfor %}
                 </tbody>
