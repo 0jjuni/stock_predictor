@@ -16,9 +16,6 @@ db.sqlite3
 # Logs
 *.log
 
-# Static files (only if they are not managed by a CDN or a static files manager)
-static/
-media/
 
 # IDE/editor files
 .vscode/

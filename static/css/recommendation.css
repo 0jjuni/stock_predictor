@@ -1,0 +1,75 @@
+/* 기존 스타일 유지 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+h1 {
+    color: #333;
+}
+
+p.description {
+    color: #555;
+    margin-top: 10px;
+    font-size: 16px;
+    text-align: center;
+    width: 80%;
+}
+
+/* 테이블 스타일 */
+.table-container {
+    width: 100%; /* 전체 너비를 사용하여 테이블 크기를 확대 */
+    max-width: 1200px; /* 최대 너비 설정 */
+    overflow-x: auto;
+}
+
+.recommendation-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.recommendation-table th, .recommendation-table td {
+    padding: 15px 20px; /* 셀 패딩을 키워 테이블 크기 확장 */
+    text-align: center;
+}
+
+.recommendation-table th {
+    background-color: #4CAF50;
+    color: white;
+    text-transform: uppercase;
+    font-size: 16px; /* 폰트 크기 확대 */
+    letter-spacing: 0.1em;
+}
+
+.recommendation-table td {
+    background-color: #fff;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px; /* 폰트 크기 확대 */
+}
+
+.recommendation-table tr:hover td {
+    background-color: #f1f1f1;
+}
+
+.recommendation-table a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.recommendation-table a:hover {
+    text-decoration: underline;
+}

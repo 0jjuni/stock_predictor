@@ -1,0 +1,43 @@
+/* 헤더 아래의 컨텐츠와 간격을 위해 필요할 수 있습니다 */
+body {
+    padding-top: 100px; /* 헤더 높이에 맞게 조정 */
+}
+
+/* 헤더의 높이 설정 */
+.navbar {
+    height: 80px; /* 원하는 높이로 설정 */
+    display: flex;
+    align-items: center; /* 가운데 정렬 */
+}
+
+/* 버튼의 간격, 배경색 등 추가 스타일링 */
+.navbar-nav .btn {
+    font-weight: bold;
+    padding: 20px 25px; /* padding을 늘려서 버튼 크기 조절 */
+    border-radius: 4px;
+    margin-left: 15px; /* 버튼 간의 간격 조정 */
+}
+
+/* 홈과 로그인 버튼 통일된 스타일 */
+.navbar-nav .btn-outline-primary {
+    color: #007bff;
+    border-color: #007bff;
+}
+
+.navbar-nav .btn-outline-primary:hover {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+/* 로그아웃 버튼 스타일 */
+.navbar-nav .btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+}
+
+.navbar-nav .btn-outline-danger:hover {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
