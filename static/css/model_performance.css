@@ -1,0 +1,57 @@
+/* 전체 컨테이너 스타일 */
+.container {
+    max-width: 1200px; /* 최대 너비 설정 */
+    margin: 0 auto; /* 가로 중앙 정렬 */
+    padding: 0 20px; /* 좌우 여백 */
+}
+
+/* 성능 테이블 컨테이너 */
+.performance-tables {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* 테이블 간 간격 */
+    flex-wrap: wrap; /* 화면이 좁아지면 테이블들이 줄바꿈됨 */
+}
+
+/* 성능 테이블 스타일 */
+.performance-table {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px; /* 테이블의 최대 너비 */
+}
+
+/* 테이블 스타일 */
+table {
+    width: 100%;
+    border-collapse: collapse; /* 테이블 셀 경계 제거 */
+}
+
+thead {
+    background-color: #007bff;
+    color: white;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* 제목 스타일 */
+h1, h3 {
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem;
+}
