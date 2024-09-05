@@ -1,40 +1,42 @@
-<link rel="stylesheet" href="../../../static/css/header.css">{% load static %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/header.css' %}">
 <header>
     <nav class="navbar fixed-top">
         <div class="container">
-            <!-- 로고 -->
-            <a class="navbar-brand" href="{% url 'home' %}">
-                <img src="{% static 'images/headerlogo.png' %}" alt="Logo" class="logo">
-            </a>
+            <!-- 네비게이션 메뉴 -->
+            <ul class="navbar-nav">
+                <!-- 로고 -->
+                <li class="nav-item">
+                    <a class="navbar-brand" href="{% url 'home' %}">
+                        <img src="{% static 'images/headerlogo.png' %}" alt="Logo" class="logo">
+                    </a>
+                </li>
+
+                <!-- 로그인 메뉴 항목 -->
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'add_interest_stock' %}">Add Stock</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'view_interest_stocks' %}">View Stocks</a>
+                    </li>
+                    <li class="nav-item">
+                        <form id="logout-form" method="post" action="{% url 'logout' %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="nav-link logout-btn">Logout</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
 
             <!-- 토글 버튼 (작은 화면에서 보임) -->
             <button class="navbar-toggler" id="navbar-toggle">
                 ☰
             </button>
-
-            <!-- 로그인 메뉴 -->
-            <div class="navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'add_interest_stock' %}">Add Stock</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'view_interest_stocks' %}">View Stocks</a>
-                        </li>
-                        <li class="nav-item">
-                            <form id="logout-form" method="post" action="{% url 'logout' %}" style="display: inline;">
-                                {% csrf_token %}
-                                <button type="submit" class="nav-link logout-btn">Logout</button>
-                            </form>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'login' %}">Login</a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </div>
         </div>
     </nav>
 </header>

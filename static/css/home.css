@@ -31,3 +31,9 @@
 .navbar-brand {
     height: auto; /* 부모 요소의 높이 제한 해제 */
 }
+
+.mb-5 {
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center; /* 가로 중앙 정렬 */
+}

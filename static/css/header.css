@@ -6,7 +6,7 @@ body {
 /* 컨테이너 크기 조정 및 중앙 정렬 */
 .container {
     max-width: 1200px; /* 최대 너비 */
-    min-width: 80%; /* 최소 너비: 화면 너비의 80% */
+    min-width: 80%;  /* 최소 너비: 화면 너비의 80% */
     width: 100%; /* 전체 너비를 차지하도록 설정 */
     margin: 0 auto; /* 가로 중앙 정렬 */
     padding: 0 20px; /* 좌우 여백 추가 */
@@ -29,18 +29,18 @@ body {
 .navbar-brand {
     display: flex;
     align-items: center; /* 로고를 수직 중앙 정렬 */
+    /*margin-right: auto;  오른쪽에 여백을 추가하여 메뉴와의 간격을 확보 */
 }
 
 .logo {
     height: 50px; /* 로고 크기 조정 */
-
 }
 
 .navbar-collapse {
     display: flex;
-    justify-content: flex-end; /* 메뉴는 오른쪽으로 */
+    justify-content: flex-end; /* 메뉴는 오른쪽으로 정렬 */
     align-items: center;
-    flex-grow: 1; /* 로고와 메뉴 사이의 공간을 차지하게 설정 */
+    /*flex-grow: 1;  로고와 메뉴 사이의 공간을 차지하게 설정 */
 }
 
 .navbar-nav {
