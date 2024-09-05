@@ -1,43 +1,122 @@
-/* 헤더 아래의 컨텐츠와 간격을 위해 필요할 수 있습니다 */
+/* 고정된 헤더로 인한 겹침 방지를 위해 body에 상단 패딩 추가 */
 body {
-    padding-top: 100px; /* 헤더 높이에 맞게 조정 */
+    padding-top: 70px; /* 헤더 높이만큼 상단 패딩 추가 */
 }
 
-/* 헤더의 높이 설정 */
+/* 컨테이너 크기 조정 및 중앙 정렬 */
+.container {
+    max-width: 1200px; /* 최대 너비 */
+    min-width: 80%; /* 최소 너비: 화면 너비의 80% */
+    width: 100%; /* 전체 너비를 차지하도록 설정 */
+    margin: 0 auto; /* 가로 중앙 정렬 */
+    padding: 0 20px; /* 좌우 여백 추가 */
+}
+
+/* 헤더 스타일링 */
 .navbar {
-    height: 80px; /* 원하는 높이로 설정 */
     display: flex;
-    align-items: center; /* 가운데 정렬 */
+    justify-content: space-between; /* 로고는 왼쪽, 메뉴는 오른쪽 */
+    align-items: center; /* 수직 중앙 정렬 */
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: fixed; /* 상단에 고정 */
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* 헤더가 다른 콘텐츠 위에 있도록 설정 */
 }
 
-/* 버튼의 간격, 배경색 등 추가 스타일링 */
-.navbar-nav .btn {
-    font-weight: bold;
-    padding: 20px 25px; /* padding을 늘려서 버튼 크기 조절 */
-    border-radius: 4px;
-    margin-left: 15px; /* 버튼 간의 간격 조정 */
+.navbar-brand {
+    display: flex;
+    align-items: center; /* 로고를 수직 중앙 정렬 */
 }
 
-/* 홈과 로그인 버튼 통일된 스타일 */
-.navbar-nav .btn-outline-primary {
+.logo {
+    height: 50px; /* 로고 크기 조정 */
+
+}
+
+.navbar-collapse {
+    display: flex;
+    justify-content: flex-end; /* 메뉴는 오른쪽으로 */
+    align-items: center;
+    flex-grow: 1; /* 로고와 메뉴 사이의 공간을 차지하게 설정 */
+}
+
+.navbar-nav {
+    list-style: none; /* 기본 목록 스타일 제거 */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 15px; /* 메뉴 간 간격 설정 */
+    align-items: center;
+}
+
+.nav-item {
+    display: inline-block;
+}
+
+.nav-link {
+    text-decoration: none;
     color: #007bff;
-    border-color: #007bff;
+    padding: 8px 15px;
+    transition: background-color 0.3s ease; /* 배경색 전환 애니메이션 */
 }
 
-.navbar-nav .btn-outline-primary:hover {
-    color: #fff;
+.nav-link:hover {
     background-color: #007bff;
-    border-color: #007bff;
+    color: white; /* 호버 시 배경 및 텍스트 색상 변경 */
 }
 
 /* 로그아웃 버튼 스타일 */
-.navbar-nav .btn-outline-danger {
-    color: #dc3545;
-    border-color: #dc3545;
+.logout-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
-.navbar-nav .btn-outline-danger:hover {
-    color: #fff;
-    background-color: #dc3545;
-    border-color: #dc3545;
+.logout-btn:hover {
+    background-color: #c82333; /* 로그아웃 버튼 호버 시 색상 변경 */
+}
+
+/* 반응형 모바일 메뉴 */
+#navbar-toggle {
+    display: none; /* 기본적으로 숨김 */
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+}
+
+/* 작은 화면에서 토글 버튼 보이게 설정 */
+@media (max-width: 768px) {
+    #navbar-toggle {
+        display: inline-block; /* 모바일에서 토글 버튼 표시 */
+    }
+
+    .navbar-collapse {
+        display: none; /* 기본적으로 숨김 */
+        flex-direction: column; /* 세로 정렬 */
+        align-items: flex-start; /* 왼쪽 정렬 */
+        width: 100%; /* 전체 너비 차지 */
+    }
+
+    .navbar-collapse.active {
+        display: flex; /* 토글 버튼 클릭 시 메뉴가 보이도록 */
+    }
+
+    .navbar-nav {
+        flex-direction: column; /* 메뉴 항목을 세로로 정렬 */
+        gap: 10px; /* 메뉴 간 간격 설정 */
+        width: 100%; /* 전체 너비 사용 */
+    }
+
+    .nav-link {
+        width: 100%; /* 각 메뉴 항목을 가득 채움 */
+        text-align: left; /* 메뉴 텍스트를 왼쪽 정렬 */
+    }
 }

@@ -6,22 +6,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}My Django Project{% endblock %}</title>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/header.css' %}"> <!-- 헤더 스타일 추가 -->
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}"> <!-- 푸터 스타일을 별도의 CSS로 관리 -->
+
+    <style>
+        /* 공통적인 레이아웃 스타일 */
+        .content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            min-height: 400px;
+        }
+
+        /* 버튼 스타일 */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
+    <!-- 공통 헤더 포함 -->
     {% include 'base/header.html' %}
 
-    <div class="content" style="flex: 1; padding-top: 60px; max-width: 2000px !important; margin: 0 auto; margin-bottom: 50px; min-height: 400px;">
-        {% block content %}
-        {% endblock %}
+    <!-- 메인 콘텐츠 영역 -->
+    <div class="content">
+        {% block content %} {% endblock %}
     </div>
+
+    <!-- 공통 푸터 포함 -->
     {% include 'base/footer.html' %}
 
-    <!-- Optional JavaScript -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- JavaScript for Toggle Menu -->
+    <script>
+        document.getElementById("navbar-toggle").addEventListener("click", function () {
+            var navbarNav = document.getElementById("navbarNav");
+            navbarNav.classList.toggle("active");
+        });
+    </script>
 </body>
 </html>
