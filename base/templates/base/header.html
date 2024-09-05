@@ -14,20 +14,20 @@
 
                 <!-- 로그인 메뉴 항목 -->
                 {% if user.is_authenticated %}
-                    <li class="nav-item">
+                    <li class="nav-item1">
                         <a class="nav-link" href="{% url 'add_interest_stock' %}">Add Stock</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item1">
                         <a class="nav-link" href="{% url 'view_interest_stocks' %}">View Stocks</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item2">
                         <form id="logout-form" method="post" action="{% url 'logout' %}" style="display: inline;">
                             {% csrf_token %}
                             <button type="submit" class="nav-link logout-btn">Logout</button>
                         </form>
                     </li>
                 {% else %}
-                    <li class="nav-item">
+                    <li class="nav-item2">
                         <a class="nav-link" href="{% url 'login' %}">Login</a>
                     </li>
                 {% endif %}
