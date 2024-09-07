@@ -53,6 +53,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="che
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    margin-bottom: 15px; /* 간격 추가 */
 }
 
 .btn-submit {
@@ -77,6 +78,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="che
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    min-height: 400px; /* 컨테이너 높이 유지 */
 }
 
 .list-title {
@@ -103,16 +105,24 @@ input[type="text"], input[type="password"], input[type="email"], input[type="che
     margin: 0;
     max-height: 400px;
     overflow-y: auto;
+    border: 1px solid #ddd; /* 리스트 영역 강조 */
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column; /* 리스트가 위쪽에 고정되도록 설정 */
+    justify-content: flex-start; /* 항목이 위쪽에 정렬되도록 함 */
 }
 
 .stock-item {
     padding: 10px;
     margin-bottom: 5px;
     background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
     cursor: pointer;
-    border-radius: 4px;
     transition: background-color 0.3s ease;
+}
+
+.stock-item:last-child {
+    border-bottom: none; /* 마지막 아이템의 보더 제거 */
 }
 
 .stock-item:hover {

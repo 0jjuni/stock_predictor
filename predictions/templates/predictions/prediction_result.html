@@ -1,26 +1,31 @@
 {% extends "base/base.html" %}
+{% load static %}
 
 {% block title %}Prediction Result{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/prediction_result.css' %}">
+{% endblock %}
+
 {% block content %}
-<div class="container mt-7">
-    <h1 class="text-center mb-4">{{ stock_name }}</h1>
+<div class="prediction-container">
+    <h1 class="text-center">{{ stock_name }}</h1>
 
     <!-- 결과 데이터 표시 -->
-    <div class="table-responsive">
-        <table class="table table-bordered table-hover">
-            <thead style="background-color: blue; color: white; text-align: center;">
+    <div class="table-container">
+        <table class="prediction-table">
+            <thead>
                 <tr>
-                    <th class="text-center">Date</th>
-                    <th class="text-center">Open</th>
-                    <th class="text-center">High</th>
-                    <th class="text-center">Low</th>
-                    <th class="text-center">Close</th>
-                    <th class="text-center">Volume</th>
+                    <th>Date</th>
+                    <th>Open</th>
+                    <th>High</th>
+                    <th>Low</th>
+                    <th>Close</th>
+                    <th>Volume</th>
                 </tr>
             </thead>
             <tbody>
-                <tr class="text-center">
+                <tr>
                     <td>{{ date }}</td>
                     <td>{{ open_price }}</td>
                     <td>{{ high }}</td>
@@ -33,53 +38,38 @@
     </div>
 
     <!-- Predict_5 모델에서 가져온 예측값 표시 -->
-    <div class="mt-5">
+    <div class="prediction-result">
         {% if predict_5_data %}
             {% if predict_5_data.prediction == 1 %}
-                <div style="background-color: #FF204E; color: white; padding: 15px; width: 60%; margin: 0 auto; border-radius: 8px; text-align: center;">
-                    5% 이상 상승할 수 있음.
-                </div>
+                <div class="result-box up">5% 이상 상승할 수 있음.</div>
             {% elif predict_5_data.prediction == 0 %}
-                <div style="background-color: white; color: black; padding: 15px; border-radius: 8px; width: 60%; margin: 0 auto; text-align: center;">
-                    5% 이상 상승하지 않음.
-                </div>
+                <div class="result-box neutral">5% 이상 상승하지 않음.</div>
             {% else %}
-                <div style="background-color: #FF204E; color: white; padding: 15px; width: 60%; margin: 0 auto; border-radius: 8px; text-align: center;">
-                    No data available for Predict_5 model.
-                </div>
+                <div class="result-box no-data">No data available for Predict_5 model.</div>
             {% endif %}
         {% else %}
-            <div style="background-color: red; color: white; padding: 15px; width: 60%; margin: 0 auto; border-radius: 8px; text-align: center;">
-                No data available for Predict_5 model.
-            </div>
+            <div class="result-box no-data">No data available for Predict_5 model.</div>
         {% endif %}
     </div>
 
     <!-- minusPredict 모델에서 가져온 예측값 표시 -->
-    <div class="mt-3">
+    <div class="prediction-result">
         {% if minus_predict_data %}
             {% if minus_predict_data.prediction == 1 %}
-                <div style="background-color: #007bff; color: white; padding: 15px; width: 60%; margin: 0 auto; border-radius: 8px; text-align: center;">
-                    5% 이상 하락할 수 있음.
-                </div>
+                <div class="result-box down">5% 이상 하락할 수 있음.</div>
             {% elif minus_predict_data.prediction == 0 %}
-                <div style="background-color: white; color: black; padding: 15px; width: 60%; margin: 0 auto; border-radius: 8px; text-align: center;">
-                    5% 이상 하락하지 않음.
-                </div>
+                <div class="result-box neutral">5% 이상 하락하지 않음.</div>
             {% else %}
-                <div style="background-color: white; color: black; padding: 15px; width: 60%; margin: 0 auto; border-radius: 8px; text-align: center;">
-                    No data available for minusPredict model.
-                </div>
+                <div class="result-box no-data">No data available for minusPredict model.</div>
             {% endif %}
         {% else %}
-            <div style="background-color: #007bff; color: white; padding: 15px; border-radius: 8px; text-align: center;">
-                No data available for minusPredict model.
-            </div>
+            <div class="result-box no-data">No data available for minusPredict model.</div>
         {% endif %}
     </div>
 
-    <div class="text-center mt-4">
-        <a href="{% url 'predict_stock' %}" class="btn btn-primary">Back to Prediction Form</a>
+    <!-- 뒤로가기 버튼 -->
+    <div class="text-center">
+        <a href="{% url 'predict_stock' %}" class="btn">Back to Prediction Form</a>
     </div>
 </div>
 {% endblock %}

@@ -5,62 +5,59 @@ body {
 
 /* 컨테이너 크기 조정 및 중앙 정렬 */
 .container {
-    max-width: 1200px; /* 최대 너비 */
-    min-width: 80%;  /* 최소 너비: 화면 너비의 80% */
-    width: 100%; /* 전체 너비를 차지하도록 설정 */
-    margin: 0 auto; /* 가로 중앙 정렬 */
-    padding: 0 20px; /* 좌우 여백 추가 */
+    max-width: 1200px;
+    min-width: 80%;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 /* 헤더 스타일링 */
 .navbar {
     display: flex;
-    justify-content: space-between; /* 로고는 왼쪽, 메뉴는 오른쪽 */
-    align-items: center; /* 수직 중앙 정렬 */
+    justify-content: space-between;
+    align-items: center;
     background-color: #f8f9fa;
     padding: 10px 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: fixed; /* 상단에 고정 */
+    position: fixed;
     top: 0;
     width: 100%;
-    z-index: 1000; /* 헤더가 다른 콘텐츠 위에 있도록 설정 */
+    z-index: 1000;
 }
 
 .navbar-brand {
     display: flex;
-    align-items: center; /* 로고를 수직 중앙 정렬 */
-    /*margin-right: auto;  오른쪽에 여백을 추가하여 메뉴와의 간격을 확보 */
+    align-items: center;
 }
 
 .logo {
-    height: 50px; /* 로고 크기 조정 */
+    height: 50px;
     margin-right: 10px;
 }
 
 .navbar-collapse {
     display: flex;
-    justify-content: flex-end; /* 메뉴는 오른쪽으로 정렬 */
+    justify-content: flex-end;
     align-items: center;
-    /*flex-grow: 1;  로고와 메뉴 사이의 공간을 차지하게 설정 */
 }
 
 .navbar-nav {
-    list-style: none; /* 기본 목록 스타일 제거 */
+    list-style: none;
     margin: 0;
     padding: 0;
     display: flex;
-    /*gap: 10px;   메뉴 간 간격 설정 */
     align-items: center;
 }
 
 .nav-item1 {
     display: inline-block;
-    margin-right: 3px; /* 오른쪽 여백 설정, 필요에 따라 조정 */
+    margin-right: 3px;
 }
 
 .nav-item2 {
     display: inline-block;
-    margin-left: auto; /* 오른쪽 정렬 */
+    margin-left: auto;
     margin-right: 15px;
 }
 
@@ -68,12 +65,12 @@ body {
     text-decoration: none;
     color: #007bff;
     padding: 8px 15px;
-    transition: background-color 0.3s ease; /* 배경색 전환 애니메이션 */
+    transition: background-color 0.3s ease;
 }
 
 .nav-link:hover {
     background-color: #007bff;
-    color: white; /* 호버 시 배경 및 텍스트 색상 변경 */
+    color: white;
 }
 
 /* 로그아웃 버튼 스타일 */
@@ -87,12 +84,12 @@ body {
 }
 
 .logout-btn:hover {
-    background-color: #c82333; /* 로그아웃 버튼 호버 시 색상 변경 */
+    background-color: #c82333;
 }
 
 /* 반응형 모바일 메뉴 */
 #navbar-toggle {
-    display: none; /* 기본적으로 숨김 */
+    display: none;
     background-color: transparent;
     border: none;
     font-size: 24px;
@@ -100,31 +97,30 @@ body {
     padding: 0;
 }
 
-/* 작은 화면에서 토글 버튼 보이게 설정 */
 @media (max-width: 768px) {
     #navbar-toggle {
-        display: inline-block; /* 모바일에서 토글 버튼 표시 */
+        display: inline-block;
     }
 
     .navbar-collapse {
-        display: none; /* 기본적으로 숨김 */
-        flex-direction: column; /* 세로 정렬 */
-        align-items: flex-start; /* 왼쪽 정렬 */
-        width: 100%; /* 전체 너비 차지 */
+        display: none;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
     }
 
     .navbar-collapse.active {
-        display: flex; /* 토글 버튼 클릭 시 메뉴가 보이도록 */
+        display: flex;
     }
 
     .navbar-nav {
-        flex-direction: column; /* 메뉴 항목을 세로로 정렬 */
-        gap: 10px; /* 메뉴 간 간격 설정 */
-        width: 100%; /* 전체 너비 사용 */
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
     }
 
     .nav-link {
-        width: 100%; /* 각 메뉴 항목을 가득 채움 */
-        text-align: left; /* 메뉴 텍스트를 왼쪽 정렬 */
+        width: 100%;
+        text-align: left;
     }
 }

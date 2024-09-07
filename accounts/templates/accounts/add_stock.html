@@ -21,9 +21,14 @@
             </div>
         {% endif %}
 
+        <!-- 주식 검색 및 입력 필드를 하나로 통합 -->
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+
+            <!-- 주식 입력 필드 (검색 및 입력 기능을 겸함) -->
+            <label for="id_stock_name">Stock Name</label>
+            <input type="text" id="id_stock_name" class="search-input" onkeyup="filterStocks()" placeholder="Search and select stock...">
+
             <button type="submit" class="btn-submit">Add Stock</button>
         </form>
     </div>
@@ -31,7 +36,6 @@
     <!-- 전체 주식 리스트를 오른쪽에 표시 -->
     <div class="stock-list-container">
         <h3 class="list-title">KOSPI Stock List</h3>
-        <input type="text" id="stock-search" class="search-input" onkeyup="filterStocks()" placeholder="Search for stocks..">
         <ul class="stock-list" id="stock-list">
             {% for stock in all_stocks %}
                 <li class="stock-item" onclick="fillStockName('{{ stock.name }}')">
@@ -44,13 +48,10 @@
 
 <!-- 자바스크립트 코드 -->
 <script>
-    function fillStockName(stockName) {
-        document.getElementById('id_stock_name').value = stockName;
-    }
-
+    // 입력 필드에 입력한 값으로 주식 목록을 필터링하는 함수
     function filterStocks() {
         var input, filter, ul, li, i, txtValue;
-        input = document.getElementById('stock-search');
+        input = document.getElementById('id_stock_name');  // 주식 입력 필드로 검색 수행
         filter = input.value.toUpperCase();
         ul = document.getElementById("stock-list");
         li = ul.getElementsByTagName('li');
@@ -63,6 +64,11 @@
                 li[i].style.display = "none";
             }
         }
+    }
+
+    // 주식 항목을 클릭하면 입력 필드에 값을 채우는 함수
+    function fillStockName(stockName) {
+        document.getElementById('id_stock_name').value = stockName;
     }
 </script>
 {% endblock %}

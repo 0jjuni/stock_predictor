@@ -1,0 +1,108 @@
+/* 메인 컨테이너 스타일 */
+.stock-container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 예측 입력 폼 섹션 */
+.form-container {
+    width: 100%; /* 오른쪽 주식 리스트를 제거했으므로 전체 너비를 사용 */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative; /* 드롭다운과 입력 필드가 같은 부모 안에 있도록 설정 */
+}
+
+.form-container h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.form-container label {
+    display: block;
+    margin-bottom: 10px;
+    color: #555;
+    font-weight: bold;
+}
+
+.form-container input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 0; /* 드롭다운을 바로 붙이기 위해 마진 제거 */
+    border-radius: 4px 4px 0 0; /* 위쪽만 둥글게 */
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-submit:hover {
+    background-color: #0056b3;
+}
+
+/* 자동완성 드롭다운 리스트 */
+.autocomplete-items {
+    position: absolute;
+    top: 45px; /* 입력 필드 바로 아래에 표시되도록 */
+    left: 0;
+    right: 0; /* 입력 필드와 동일한 너비로 설정 */
+    border: 1px solid #ddd;
+    border-top: none; /* 검색창과 연결된 듯한 느낌을 주기 위해 */
+    z-index: 99;
+    background-color: #fff;
+    border-radius: 0 0 4px 4px; /* 아래쪽만 둥글게 */
+    max-height: 150px; /* 최대 높이를 설정하고 스크롤 가능하게 */
+    overflow-y: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.autocomplete-items .stock-item {
+    padding: 10px;
+    cursor: pointer;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s ease;
+}
+
+.autocomplete-items .stock-item:hover {
+    background-color: #eaeaea;
+}
+
+.autocomplete-items .stock-item:last-child {
+    border-bottom: none;
+}
+
+/* Home 버튼 스타일 */
+.home-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.home-button:hover {
+    background-color: #0056b3;
+}

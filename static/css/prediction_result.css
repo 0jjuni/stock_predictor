@@ -1,0 +1,86 @@
+/* 전체 예측 결과 컨테이너 스타일 */
+.prediction-container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 제목 스타일 */
+.prediction-container .text-center {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* 테이블 스타일 */
+.prediction-container .table-container {
+    margin-bottom: 40px;
+}
+
+.prediction-container .prediction-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.prediction-container .prediction-table th,
+.prediction-container .prediction-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+}
+
+.prediction-container .prediction-table thead {
+    background-color: blue;
+    color: white;
+}
+
+/* 예측 결과 박스 스타일 */
+.prediction-container .prediction-result {
+    margin-bottom: 30px;
+}
+
+.prediction-container .result-box {
+    width: 60%;
+    margin: 0 auto;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.prediction-container .up {
+    background-color: #FF204E;
+    color: white;
+}
+
+.prediction-container .down {
+    background-color: #007bff;
+    color: white;
+}
+
+.prediction-container .neutral {
+    background-color: white;
+    color: black;
+    border: 1px solid #ddd;
+}
+
+.prediction-container .no-data {
+    background-color: #ccc;
+    color: white;
+}
+
+/* 버튼 스타일 */
+.prediction-container .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.prediction-container .btn:hover {
+    background-color: #0056b3;
+}

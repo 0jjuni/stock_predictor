@@ -1,196 +1,71 @@
-<!DOCTYPE html>
 {% extends "base/base.html" %}
-
 {% load static %}
 
+{% block title %}Stock Prediction{% endblock %}
+
+{% block extra_css %}
+<!-- 외부 CSS 파일을 연결합니다. -->
+<link rel="stylesheet" href="{% static 'css/predict.css' %}">
+{% endblock %}
+
 {% block content %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Stock Prediction</title>
-    <!-- 기존 페이지 스타일 -->
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            min-height: 100vh;
-        }
+<div class="stock-container">
+    <!-- 왼쪽의 주식 예측 입력 폼 -->
+    <div class="form-container">
+        <h1>Enter Stock Data for Prediction</h1>
+        <form method="POST" action="{% url 'predict_stock' %}">
+            {% csrf_token %}
+            <label for="stock_name">Stock Name:</label>
+            <input type="text" id="stock_name" name="stock_name" onkeyup="filterStocks()" required autocomplete="off">
+            <!-- 자동완성 드롭다운 리스트 -->
+            <ul id="autocomplete-list" class="autocomplete-items" style="display: none;"></ul>
+            <button type="submit" class="btn-submit">Predict</button>
+        </form>
 
-        .container {
-            display: flex;
-            justify-content: space-between;
-            width: 80%;
-            margin-top: 50px; /* 상단 여백 */
-        }
-
-        .form-container {
-            flex: 1;
-            margin-right: 20px;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .form-container h1 {
-            color: #333;
-        }
-
-        .form-container label {
-            display: block;
-            margin-bottom: 10px;
-            color: #555;
-            font-weight: bold;
-        }
-
-        .form-container input[type="text"] {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-
-        .form-container button {
-            background-color: #007bff; /* 파란색 계열 */
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .form-container button:hover {
-            background-color: #0056b3; /* 조금 더 진한 파란색 */
-        }
-
-        .form-container h2 {
-            color: #007bff; /* 파란색 계열 */
-        }
-
-        .stock-list-container {
-            flex: 1;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-height: 500px;
-            overflow-y: auto;
-        }
-
-        .stock-list-container h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        #stock-search {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-
-        ul.stock-list {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        ul.stock-list li {
-            padding: 10px;
-            cursor: pointer;
-            border-bottom: 1px solid #ddd;
-        }
-
-        ul.stock-list li:hover {
-            background-color: #f1f1f1;
-        }
-
-        /* 오른쪽 위에 Home 버튼 */
-        .home-button {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #007bff;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .home-button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Home 버튼 삽입 -->
-    <a href="{% url 'home' %}" class="home-button">Home</a>
-
-    <div class="container">
-        <div class="form-container">
-            <h1>Enter Stock Data for Prediction</h1>
-            <form method="POST" action="{% url 'predict_stock' %}">
-                {% csrf_token %}
-                <label for="stock_name">Stock Name:</label>
-                <input type="text" id="stock_name" name="stock_name" required><br>
-                <button type="submit" class="btn btn-primary">Predict</button>
-            </form>
-
-            {% if prediction is not None %}
-                <h2>Prediction Result: {{ prediction }}</h2>
-            {% endif %}
-        </div>
-
-        <div class="stock-list-container">
-            <h2>KOSPI Stock List</h2>
-            <input type="text" id="stock-search" onkeyup="filterStocks()" placeholder="Search for stocks..">
-            <ul class="stock-list" id="stock-list">
-                {% for name in stock_name_list %}
-                    <li onclick="fillStockName('{{ name }}')">{{ name }}</li>
-                {% endfor %}
-            </ul>
-        </div>
+        <!-- 예측 결과 표시 -->
+        {% if prediction is not None %}
+            <h2>Prediction Result: {{ prediction }}</h2>
+        {% endif %}
     </div>
+</div>
 
-    <!-- 자바스크립트 코드 -->
-    <script>
-        function fillStockName(stockName) {
-            document.getElementById('stock_name').value = stockName;
+<!-- 자바스크립트 -->
+<script>
+    function fillStockName(stockName) {
+        document.getElementById('stock_name').value = stockName;
+        document.getElementById('autocomplete-list').style.display = 'none';  // 항목을 선택하면 드롭다운을 숨김
+    }
+
+    function filterStocks() {
+        var input = document.getElementById('stock_name');
+        var filter = input.value.toUpperCase();
+        var ul = document.getElementById("autocomplete-list");
+        var stockList = [{% for name in stock_name_list %}"{{ name }}",{% endfor %}];  // 전체 주식 리스트
+
+        // 기존 리스트 초기화
+        ul.innerHTML = '';
+
+        // 입력된 값이 없으면 드롭다운을 숨김
+        if (!filter) {
+            ul.style.display = 'none';
+            return;
         }
 
-        function filterStocks() {
-            var input, filter, ul, li, i, txtValue;
-            input = document.getElementById('stock-search');
-            filter = input.value.toUpperCase();
-            ul = document.getElementById("stock-list");
-            li = ul.getElementsByTagName('li');
-
-            for (i = 0; i < li.length; i++) {
-                txtValue = li[i].textContent || li[i].innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    li[i].style.display = "";
-                } else {
-                    li[i].style.display = "none";
-                }
+        // 입력된 값이 있을 때만 필터링하여 드롭다운을 표시
+        stockList.forEach(function(stock) {
+            if (stock.toUpperCase().indexOf(filter) > -1) {
+                var li = document.createElement('li');
+                li.classList.add('stock-item');
+                li.textContent = stock;  // 글머리표 없이 텍스트만 추가
+                li.onclick = function() {
+                    fillStockName(stock);
+                };
+                ul.appendChild(li);
             }
-        }
-    </script>
-</body>
-</html>
+        });
 
+        // 드롭다운 항목이 있으면 보이고, 없으면 숨김
+        ul.style.display = ul.children.length > 0 ? 'block' : 'none';
+    }
+</script>
 {% endblock %}

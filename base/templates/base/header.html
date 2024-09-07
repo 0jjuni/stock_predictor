@@ -12,13 +12,21 @@
                     </a>
                 </li>
 
+                <!-- 종목 추천과 모델 정보 버튼 추가 -->
+                <li class="nav-item1">
+                    <a class="nav-link" href="{% url 'recommend_stocks' %}">종목 추천</a>
+                </li>
+                <li class="nav-item1">
+                    <a class="nav-link" href="{% url 'model_performance' %}">모델 정보</a>
+                </li>
+
                 <!-- 로그인 메뉴 항목 -->
                 {% if user.is_authenticated %}
                     <li class="nav-item1">
-                        <a class="nav-link" href="{% url 'add_interest_stock' %}">Add Stock</a>
+                        <a class="nav-link" href="{% url 'add_interest_stock' %}">관심종목추가</a>
                     </li>
                     <li class="nav-item1">
-                        <a class="nav-link" href="{% url 'view_interest_stocks' %}">View Stocks</a>
+                        <a class="nav-link" href="{% url 'view_interest_stocks' %}">관심종목확인</a>
                     </li>
                     <li class="nav-item2">
                         <form id="logout-form" method="post" action="{% url 'logout' %}" style="display: inline;">
