@@ -1,29 +1,33 @@
 {% extends "base/base.html" %}
+{% load static %}
 
 {% block title %}Recommended Stocks{% endblock %}
 
+{% block extra_css %}
+<!-- recommendation.css 파일을 static 경로에서 불러옴 -->
+<link rel="stylesheet" href="{% static 'css/recommendation.css' %}">
+{% endblock %}
+
 {% block content %}
-<h1 class="text-center my-4">Recommended Stocks</h1>
+<h1 class="header-title">Recommended Stocks</h1>
 
 <!-- 설명 추가 -->
-<p class="description text-center mb-4">
+<p class="description">
     해당 추천 종목은 모델이 코스피 종목들에 대해 하루 뒤 5% 이상 오를 것이라고 예측한 종목입니다. 해당 종목을 클릭하면 종목 뉴스와 공시를 확인할 수 있습니다.
 </p>
 
 <!-- 추천 종목을 버튼 형태로 2개씩 한 줄에 표시 -->
-<div class="container">
-    <div class="row">
-        {% if recommended_stocks %}
-            {% for stock in recommended_stocks %}
-                <div class="col-12 col-md-6 mb-3 d-flex justify-content-center">
-                    <a href="https://finance.naver.com/item/news.naver?code={{ stock.code }}" target="_blank" class="btn btn-primary w-100" style="min-width: 200px;">
-                        {{ stock.name }}
-                    </a>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>No recommendations at this time.</p>
-        {% endif %}
-    </div>
+<div class="stock-container">
+    {% if recommended_stocks %}
+        {% for stock in recommended_stocks %}
+            <div class="stock-item">
+                <a href="https://finance.naver.com/item/news.naver?code={{ stock.code }}" target="_blank" class="stock-link">
+                    {{ stock.name }}
+                </a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No recommendations at this time.</p>
+    {% endif %}
 </div>
 {% endblock %}
