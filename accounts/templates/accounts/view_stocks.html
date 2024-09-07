@@ -1,31 +1,36 @@
 {% extends "base/base.html" %}
+{% load static %}
 
 {% block title %}My Interest Stocks{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/view_stocks.css' %}">
+{% endblock %}
+
 {% block content %}
-<div class="container mt-5">
-    <h1 class="text-center mb-4">My Interest Stocks</h1>
-    <p class="text-center">사놓은 종목이 있거나 관심있는 종목이 있는 경우 추가해서 해당 종목을 관리하세요!</p> <!-- 설명 추가 -->
+<div class="stocks-container">
+    <h1 class="stocks-title">My Interest Stocks</h1>
+    <p class="stocks-description">사놓은 종목이 있거나 관심있는 종목이 있는 경우 추가해서 해당 종목을 관리하세요!</p>
 
     {% if stock_data %}
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover">
-                <thead style="background-color: #007bff; color: white;">
+        <div class="table-container">
+            <table class="stocks-table">
+                <thead>
                     <tr>
-                        <th class="text-center" style="vertical-align: middle;">Stock Name</th>
-                        <th class="text-center" style="vertical-align: middle;">5% 상승 예측</th>
-                        <th class="text-center" style="vertical-align: middle;">5% 하락 예측</th>
-                        <th class="text-center" style="vertical-align: middle;">뉴스·공시</th> <!-- 뉴스 열 추가 -->
+                        <th>Stock Name</th>
+                        <th>5% 상승 예측</th>
+                        <th>5% 하락 예측</th>
+                        <th>뉴스·공시</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for item in stock_data %}
-                        <tr class="text-center">
-                            <td style="vertical-align: middle;">{{ item.stock.stock_name }}</td>
-                            <td style="vertical-align: middle;">
+                        <tr>
+                            <td>{{ item.stock.stock_name }}</td>
+                            <td>
                                 {% if item.predict_5_data %}
                                     {% if item.predict_5_data.prediction == 1 %}
-                                        <span style="color: red;">5% 이상 상승 예상</span>
+                                        <span class="text-up">5% 이상 상승 예상</span>
                                     {% else %}
                                         <span>5% 이상 상승하지 않음</span>
                                     {% endif %}
@@ -33,10 +38,10 @@
                                     <span>No data</span>
                                 {% endif %}
                             </td>
-                            <td style="vertical-align: middle;">
+                            <td>
                                 {% if item.minus_predict_data %}
                                     {% if item.minus_predict_data.prediction == 1 %}
-                                        <span style="color: blue;">5% 이상 하락 예상</span>
+                                        <span class="text-down">5% 이상 하락 예상</span>
                                     {% else %}
                                         <span>5% 이상 하락하지 않음</span>
                                     {% endif %}
@@ -44,18 +49,18 @@
                                     <span>No data</span>
                                 {% endif %}
                             </td>
-                            <td style="vertical-align: middle;">
-                                <a href="https://finance.naver.com/item/news.naver?code={{ item.stock.stock_code }}" target="_blank" class="btn btn-primary">
+                            <td>
+                                <a href="https://finance.naver.com/item/news.naver?code={{ item.stock.stock_code }}" target="_blank" class="btn-link">
                                     바로가기
                                 </a>
-                            </td> <!-- 뉴스 열에 버튼 추가 -->
+                            </td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     {% else %}
-        <p class="text-center">No stocks in your interest list.</p>
+        <p class="no-stocks">No stocks in your interest list.</p>
     {% endif %}
 </div>
 {% endblock %}

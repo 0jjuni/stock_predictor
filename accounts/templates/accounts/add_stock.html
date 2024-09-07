@@ -1,56 +1,48 @@
 {% extends "base/base.html" %}
+{% load static %}
 
 {% block title %}Add Interest Stock{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/add_stock.css' %}">
+{% endblock %}
+
 {% block content %}
-<div class="container mt-3">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header text-center">
-                    <h3>Add Interest Stock</h3>
-                </div>
-                <div class="card-body">
-                    <!-- 메시지 표시 블록 추가 -->
-                    {% if messages %}
-                        <div>
-                            {% for message in messages %}
-                                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+<div class="stock-container">
+    <div class="stock-form">
+        <h3 class="form-title">Add Interest Stock</h3>
 
-                    <form method="post">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <button type="submit" class="btn btn-primary w-100">Add Stock</button>
-                    </form>
-                </div>
+        <!-- 메시지 표시 블록 -->
+        {% if messages %}
+            <div>
+                {% for message in messages %}
+                    <div class="alert-message {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
             </div>
-        </div>
+        {% endif %}
 
-        <!-- 전체 주식 리스트를 오른쪽에 표시 -->
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header text-center">
-                    <h3>KOSPI Stock List</h3>
-                </div>
-                <div class="card-body">
-                    <input type="text" id="stock-search" class="form-control mb-3" onkeyup="filterStocks()" placeholder="Search for stocks..">
-                    <ul class="list-group" id="stock-list" style="max-height: 400px; overflow-y: auto; width: 100%;">
-                        {% for stock in all_stocks %}
-                            <li class="list-group-item" onclick="fillStockName('{{ stock.name }}')">
-                                {{ stock.name }}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-submit">Add Stock</button>
+        </form>
+    </div>
+
+    <!-- 전체 주식 리스트를 오른쪽에 표시 -->
+    <div class="stock-list-container">
+        <h3 class="list-title">KOSPI Stock List</h3>
+        <input type="text" id="stock-search" class="search-input" onkeyup="filterStocks()" placeholder="Search for stocks..">
+        <ul class="stock-list" id="stock-list">
+            {% for stock in all_stocks %}
+                <li class="stock-item" onclick="fillStockName('{{ stock.name }}')">
+                    {{ stock.name }}
+                </li>
+            {% endfor %}
+        </ul>
     </div>
 </div>
 
-<!-- 자바스크립트 코드 추가 -->
+<!-- 자바스크립트 코드 -->
 <script>
     function fillStockName(stockName) {
         document.getElementById('id_stock_name').value = stockName;

@@ -1,24 +1,22 @@
 {% extends "base/base.html" %}
+{% load static %}
 
 {% block title %}회원가입{% endblock %}
 
+{% block extra_css %}
+<!-- custom register.css 파일을 로드 -->
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
+
 {% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-20">
-            <div class="card">
-                <div class="card-header text-center">
-                    <h3>회원가입</h3>
-                </div>
-                <div class="card-body">
-                    <form method="post">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <button type="submit" class="btn btn-primary w-100">회원가입</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+<div class="register-container">
+    <div class="register-card">
+        <h3 class="register-title">회원가입</h3>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-submit">회원가입</button>
+        </form>
     </div>
 </div>
 {% endblock %}
