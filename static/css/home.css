@@ -12,28 +12,79 @@
     flex-wrap: wrap; /* 화면이 좁아지면 버튼들이 줄바꿈됨 */
 }
 
-/* 버튼 스타일 */
-.btn-lg {
-    font-size: 1.2rem;
-    padding: 15px;
-    text-align: center;
-    min-width: 150px; /* 버튼의 최소 너비 */
+/* 검색 입력 필드와 폼 스타일 */
+.form-container {
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    margin: 20px auto;
+    max-width: 600px;
 }
 
-.lead {
-    font-size: 1.1rem;
+.input-dropdown-container {
+    position: relative;
 }
 
-.mb-5 {
-    margin-bottom: 2.5rem !important;
+.form-container input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px; /* 드롭다운을 아래로 띄우기 위해 마진 추가 */
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
 }
 
-.navbar-brand {
-    height: auto; /* 부모 요소의 높이 제한 해제 */
+.btn-submit {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px; /* 입력창과 버튼 사이의 간격 추가 */
 }
 
-.mb-5 {
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center; /* 가로 중앙 정렬 */
+.btn-submit:hover {
+    background-color: #0056b3;
 }
+
+/* 자동완성 드롭다운 리스트 */
+.autocomplete-items {
+    position: absolute;
+    top: 100%; /* 입력 필드 바로 아래에 위치 */
+    left: 0;
+    right: 0;
+    border: 1px solid #ddd;
+    z-index: 99;
+    background-color: #fff;
+    border-radius: 0 0 4px 4px;
+    max-height: 150px;
+    overflow-y: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    list-style-type: none;  /* 기본 목록 스타일 제거 (점 제거) */
+    padding-left: 0; /* 좌측 여백 제거 */
+    margin: 0; /* 기본 마진 제거 */
+}
+
+.autocomplete-items .stock-item {
+    padding: 10px;
+    cursor: pointer;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s ease;
+}
+
+.autocomplete-items .stock-item:hover {
+    background-color: #eaeaea;
+}
+
+.autocomplete-items .stock-item:last-child {
+    border-bottom: none;
+}
+
+
