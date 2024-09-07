@@ -11,29 +11,26 @@
 
 .footer p {
     margin: 0;
-    padding-bottom: 10px;
-    font-size: 14px;
+    padding-top: 10px;
+    font-size: 15px;
+    color: #fff;
 }
 
+/* 소셜 링크 아이콘만 표시 및 스타일 */
 .footer .social-links {
-    font-size: 16px;
+    font-size: 0; /* 텍스트 크기 없앰 (아이콘만 남도록) */
 }
 
 .footer .social-links a {
-    color: #007bff;
+    color: #ccc; /* 기본 회색 아이콘 색상 */
     text-decoration: none;
-    margin: 0 5px;
+    margin: 0 10px;
+    font-size: 36px; /* 아이콘 크기 명확하게 설정 */
     transition: color 0.3s ease;
 }
 
 .footer .social-links a:hover {
-    color: #0056b3;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 15px;
+    color: #fff; /* 호버 시 색상 변경 */
 }
 
 /* 반응형 푸터 */
@@ -41,4 +38,11 @@
     .footer p, .footer .social-links {
         font-size: 14px;
     }
+}
+
+/* 컨테이너 스타일링 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
 }
