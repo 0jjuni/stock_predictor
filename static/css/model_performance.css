@@ -1,33 +1,39 @@
 /* 전체 컨테이너 스타일 */
 .container {
-    max-width: 1200px; /* 최대 너비 설정 */
-    margin: 0 auto; /* 가로 중앙 정렬 */
-    padding: 0 20px; /* 좌우 여백 */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
-
+.mt-5{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 60vh;
+}
 /* 성능 테이블 컨테이너 */
 .performance-tables {
     display: flex;
-    justify-content: center;
-    gap: 20px; /* 테이블 간 간격 */
-    flex-wrap: wrap; /* 화면이 좁아지면 테이블들이 줄바꿈됨 */
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 40px;
 }
 
 /* 성능 테이블 스타일 */
 .performance-table {
     border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 20px;
+    border-radius: 8px;
+    padding: 30px;
     background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     width: 100%;
-    max-width: 500px; /* 테이블의 최대 너비 */
+    max-width: 500px;
 }
 
 /* 테이블 스타일 */
 table {
     width: 100%;
-    border-collapse: collapse; /* 테이블 셀 경계 제거 */
+    border-collapse: collapse;
 }
 
 thead {
@@ -37,7 +43,7 @@ thead {
 
 th, td {
     border: 1px solid #ddd;
-    padding: 10px;
+    padding: 12px;
     text-align: center;
 }
 
@@ -47,11 +53,42 @@ th, td {
 
 /* 제목 스타일 */
 h1, h3 {
-    margin: 0;
+    margin-bottom: 10px;
     padding: 0;
     color: #333;
 }
 
+h1 {
+    font-size: 32px;
+}
+
+h3 {
+    font-size: 24px;
+    color: #007bff;
+    font-weight: bold;
+}
+
+/* 설명 텍스트 스타일 */
+.description {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+/* 테이블 간격 및 마진 추가 */
 .mb-4 {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+    .performance-tables {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .performance-table {
+        width: 90%;
+    }
 }

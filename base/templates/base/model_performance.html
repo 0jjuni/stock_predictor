@@ -7,11 +7,13 @@
 <link rel="stylesheet" href="{% static 'css/model_performance.css' %}">
 <div class="container mt-5 text-center">
     <h1 class="mb-4">Model Performance</h1>
+    <p class="lead">해당 페이지는 주식을 예측하는 모델들의 성능지표를 나타냅니다.</p>
 
     <div class="performance-tables">
         <!-- 5% 상승 예측 모델 성능 -->
         <div class="performance-table">
             <h3>5% 상승 예측 모델</h3>
+            <p class="description">해당 모델은 5%이상 오르는지에 대해 예측하는 모델로 정밀도에 초점을 두고 만든 모델입니다.</p>
             <table>
                 <thead>
                     <tr>
@@ -35,6 +37,7 @@
         <!-- 5% 하락 예측 모델 성능 -->
         <div class="performance-table">
             <h3>5% 하락 예측 모델</h3>
+            <p class="description">해당 모델은 5% 하락하는 종목을 예측하는 모델로 f1에 초점을 두고 성능을 향상시킨 모델입니다.</p>
             <table>
                 <thead>
                     <tr>
