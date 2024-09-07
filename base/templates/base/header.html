@@ -12,7 +12,7 @@
                     </a>
                 </li>
 
-                <!-- 종목 추천과 모델 정보 버튼 추가 -->
+                <!-- 종목 추천과 모델 정보 버튼은 항상 표시 -->
                 <li class="nav-item1">
                     <a class="nav-link" href="{% url 'recommend_stocks' %}">종목 추천</a>
                 </li>
@@ -20,23 +20,25 @@
                     <a class="nav-link" href="{% url 'model_performance' %}">모델 정보</a>
                 </li>
 
-                <!-- 로그인 메뉴 항목 -->
+                <!-- 관심 종목 관련 링크들: 로그인 여부에 따라 로그인 페이지로 리다이렉트 -->
+                <li class="nav-item1">
+                    <a class="nav-link" href="{% if user.is_authenticated %}{% url 'add_interest_stock' %}{% else %}{% url 'login' %}{% endif %}">관심종목추가</a>
+                </li>
+                <li class="nav-item1">
+                    <a class="nav-link" href="{% if user.is_authenticated %}{% url 'view_interest_stocks' %}{% else %}{% url 'login' %}{% endif %}">관심종목확인</a>
+                </li>
+
+                <!-- 로그인/로그아웃 버튼: 로그인 여부에 따라 표시 -->
                 {% if user.is_authenticated %}
-                    <li class="nav-item1">
-                        <a class="nav-link" href="{% url 'add_interest_stock' %}">관심종목추가</a>
-                    </li>
-                    <li class="nav-item1">
-                        <a class="nav-link" href="{% url 'view_interest_stocks' %}">관심종목확인</a>
-                    </li>
                     <li class="nav-item2">
                         <form id="logout-form" method="post" action="{% url 'logout' %}" style="display: inline;">
                             {% csrf_token %}
-                            <button type="submit" class="nav-link logout-btn">Logout</button>
+                            <button type="submit" class="nav-link logout-btn">로그아웃</button>
                         </form>
                     </li>
                 {% else %}
                     <li class="nav-item2">
-                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                        <a class="nav-link nav-link-login" href="{% url 'login' %}">로그인</a>
                     </li>
                 {% endif %}
             </ul>

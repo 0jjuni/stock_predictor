@@ -72,6 +72,20 @@ body {
     background-color: #007bff;
     color: white;
 }
+/* 로그인 버튼 스타일 */
+.nav-link-login {
+    background-color: #007bff; /* 기본 파란색 배경 */
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.nav-link-login:hover {
+    background-color: #0056b3; /* 호버 시 더 진한 파란색 */
+    color: white; /* 텍스트 색상 유지 */
+}
 
 /* 로그아웃 버튼 스타일 */
 .logout-btn {
