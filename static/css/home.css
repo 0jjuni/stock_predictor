@@ -1,8 +1,17 @@
-/* 로고 크기 */
+
 .logo-home {
-    height: 200px !important; /* 강제 적용 */
+    height: 50px !important; /* 강제 적용 */
     width: auto !important;
 }
+
+h1.mb-5 {
+    display: flex;
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center;      /* 수직 중앙 정렬 */
+    margin-top: 60px; /* 위쪽 마진을 추가하여 여백을 설정 */
+}
+
+
 
 /* 버튼 Flexbox 레이아웃 적용 */
 .button-container {
