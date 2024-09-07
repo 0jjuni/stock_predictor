@@ -45,25 +45,27 @@ def add_interest_stock(request):
             try:
                 stock = Stock.objects.get(name=stock_name)
             except Stock.DoesNotExist:
-                messages.error(request, f"{stock_name} is not a valid stock name.")
+                messages.error(request, f"[{stock_name}]는 코스피 종목이 아니거나 잘못입력하셨습니다.")
                 return render(request, 'accounts/add_stock.html', {'form': form, 'all_stocks': all_stocks})
 
             # 동일한 주식이 이미 관심 목록에 있는지 확인
             if InterestStock.objects.filter(user=request.user, stock_code=stock.code).exists():
-                messages.error(request, f"{stock_name} is already in your interest list.")
+                messages.error(request, f"[{stock_name}]는 이미 관심 종목에 추가되어있습니다.")
             else:
+                # stock_code를 찾아서 InterestStock 객체를 저장
                 interest_stock = InterestStock(
                     user=request.user,
                     stock_name=stock.name,
-                    stock_code=stock.code
+                    stock_code=stock.code  # 주식 코드 추가
                 )
                 interest_stock.save()
-                messages.success(request, f"{stock_name} has been added to your interest list.")
+                messages.success(request, f"[{stock_name}]이(가) 성공적으로 추가되었습니다.")
                 return redirect('add_interest_stock')
     else:
         form = InterestStockForm()
 
     return render(request, 'accounts/add_stock.html', {'form': form, 'all_stocks': all_stocks})
+
 
 
 

@@ -10,7 +10,7 @@
 {% block content %}
 <div class="stock-container">
     <div class="stock-form">
-        <h3 class="form-title">Add Interest Stock</h3>
+        <h3 class="form-title">관심종목 추가</h3>
 
         <!-- 메시지 표시 블록 -->
         {% if messages %}
@@ -24,18 +24,16 @@
         <!-- 주식 검색 및 입력 필드를 하나로 통합 -->
         <form method="post">
             {% csrf_token %}
+            <!-- form 렌더링 -->
+            {{ form.as_p }}
 
-            <!-- 주식 입력 필드 (검색 및 입력 기능을 겸함) -->
-            <label for="id_stock_name">Stock Name</label>
-            <input type="text" id="id_stock_name" class="search-input" onkeyup="filterStocks()" placeholder="Search and select stock...">
-
-            <button type="submit" class="btn-submit">Add Stock</button>
+            <button type="submit" class="btn-submit">추가하기</button>
         </form>
     </div>
 
     <!-- 전체 주식 리스트를 오른쪽에 표시 -->
     <div class="stock-list-container">
-        <h3 class="list-title">KOSPI Stock List</h3>
+        <h3 class="list-title">코스피 종목 리스트</h3>
         <ul class="stock-list" id="stock-list">
             {% for stock in all_stocks %}
                 <li class="stock-item" onclick="fillStockName('{{ stock.name }}')">
