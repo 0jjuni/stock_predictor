@@ -12,12 +12,17 @@
 
 /* 예측 입력 폼 섹션 */
 .form-container {
-    width: 100%; /* 오른쪽 주식 리스트를 제거했으므로 전체 너비를 사용 */
+    width: 100%;
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    position: relative; /* 드롭다운과 입력 필드가 같은 부모 안에 있도록 설정 */
+    position: relative; /* 부모 요소에 relative 설정 */
+}
+
+/* 입력 필드와 드롭다운을 감싸는 컨테이너 */
+.input-dropdown-container {
+    position: relative; /* 드롭다운이 입력창 아래로 나오도록 설정 */
 }
 
 .form-container h1 {
@@ -36,8 +41,8 @@
 .form-container input[type="text"] {
     width: 100%;
     padding: 10px;
-    margin-bottom: 0; /* 드롭다운을 바로 붙이기 위해 마진 제거 */
-    border-radius: 4px 4px 0 0; /* 위쪽만 둥글게 */
+    margin-bottom: 10px; /* 드롭다운을 아래로 띄우기 위해 마진 추가 */
+    border-radius: 4px;
     border: 1px solid #ccc;
     box-sizing: border-box;
 }
@@ -51,6 +56,7 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    margin-top: 20px; /* 입력창과 버튼 사이의 간격 추가 */
 }
 
 .btn-submit:hover {
@@ -60,17 +66,19 @@
 /* 자동완성 드롭다운 리스트 */
 .autocomplete-items {
     position: absolute;
-    top: 45px; /* 입력 필드 바로 아래에 표시되도록 */
+    top: 100%; /* 입력 필드 바로 아래에 위치 */
     left: 0;
-    right: 0; /* 입력 필드와 동일한 너비로 설정 */
+    right: 0;
     border: 1px solid #ddd;
-    border-top: none; /* 검색창과 연결된 듯한 느낌을 주기 위해 */
     z-index: 99;
     background-color: #fff;
-    border-radius: 0 0 4px 4px; /* 아래쪽만 둥글게 */
-    max-height: 150px; /* 최대 높이를 설정하고 스크롤 가능하게 */
+    border-radius: 0 0 4px 4px;
+    max-height: 150px;
     overflow-y: auto;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    list-style-type: none;  /* 기본 목록 스타일 제거 (점 제거) */
+    padding-left: 0; /* 좌측 여백 제거 */
+    margin: 0; /* 기본 마진 제거 */
 }
 
 .autocomplete-items .stock-item {
